@@ -1,0 +1,101 @@
+%
+O0002 (SVERLENIE 4 OS - OTVERSTIYA NA RADIUSE)
+
+(--- RASPOLOZHENIE OTVERSTIY ---)
+#101 = 4.0     (KOLICHESTVO_OTVERSTIY)
+#102 = 0.0     (UGOL_NACHALA_A - perviy ugol, grad)
+#103 = 0.0     (SHAG_UGLA: 0 = AVTO 360/N, ili vvesti vruchnuyu)
+#104 = 25.0    (X_POZITSIYA - rasstoyaniye ot osi vrashcheniya do tsentra otverstiya)
+#105 = 0.0     (Y_POZITSIYA - obychno 0)
+#106 = 5.0     (Z_BEZOPASNO_NAD_POVERKHNOSTYU)
+#107 = 20.0    (GLUBINA_SVERLENIA - bez znaka)
+#108 = 3.0     (GLUBINA_PECKING_G83: 0 = G81 bez pecking)
+
+(--- INSTRUMENT ---)
+#111 = 8.0     (D_SVERLA)
+#112 = 3.0     (NOMER_T)
+#113 = 1500.0  (OBOROTY_S)
+#114 = 80.0    (PODACHA_F)
+
+(--- VNUTRENNIE RASHETY ---)
+#150 = 0                    (SCHETCHIK_OTVERSTIY)
+#151 = #102                 (TEKUSCHIY_UGOL_A)
+#152 = #103                 (RABOCHIY_SHAG_UGLA)
+IF [#152 GT 0] GOTO 5
+#152 = [360.0 / #101]       (AVTO SHAG ESLI #103 = 0)
+N5
+
+(--- START PROGRAMMY ---)
+G90 G54 G17 G40 G80
+T#112 M6
+S#113 M3
+M8
+G43 H#112 Z50.0
+
+N100
+IF [#150 GE #101] GOTO 999
+
+(PEREEZD K SLEDUYUSHCHEMU OTVERSIYU)
+G00 Z50.0
+G00 A#151
+G00 X#104 Y#105
+G00 Z#106
+
+IF [#108 GT 0] GOTO 110
+(--- G81 BEZ PECKING ---)
+G81 Z-[#107] R[#106] F#114
+GOTO 120
+N110
+(--- G83 S PECKINGOM ---)
+G83 Z-[#107] Q[#108] R[#106] F#114
+N120
+G80
+
+#150 = #150 + 1
+#151 = #151 + #152
+GOTO 100
+
+N999
+G00 Z50.0
+G91 G28 Z0 M5 M9
+M30
+%
+
+
+===========================================================
+  OPISANIYE PARAMETROV
+===========================================================
+
+  RASPOLOZHENIE:
+  #101  KOLICHESTVO_OTVERSTIY   — skol'ko otverstiy sverlit'
+  #102  UGOL_NACHALA_A          — ugol A pervogo otverstiya, grad
+                                  (naprimer: 0, 45, 90...)
+  #103  SHAG_UGLA               — ugol mezhdu otverstiyami, grad
+                                  0 = avtomaticheski = 360 / N
+                                  Primer: 4 otverstiya, shag 0 → shag budet 90 grad
+                                  Primer: 4 otverstiya, shag 45 → 0°, 45°, 90°, 135°
+  #104  X_POZITSIYA             — koordinata X otverstiya (rasstoyaniye ot osi A)
+  #105  Y_POZITSIYA             — koordinata Y, obychno 0 (na osi)
+  #106  Z_BEZOPASNO             — vysota bystroy podachi nad detalyu
+  #107  GLUBINA_SVERLENIA       — glubina, polozhitel'noye chislo
+  #108  GLUBINA_PECKING         — glubina za odin vkhod dlya G83
+                                  0 = G81 (pryamoye sverlenie)
+
+  INSTRUMENT:
+  #111  D_SVERLA                — diametr sverla, mm
+  #112  NOMER_T                 — nomer instrumenta
+  #113  OBOROTY_S               — oboroty, ob/min
+  #114  PODACHA_F               — podacha sverlenia, mm/min
+
+===========================================================
+  PRIMERY UGLOV
+===========================================================
+
+  4 otverstiya ravnomerno:   #101=4  #102=0   #103=0   → 0°  90° 180° 270°
+  4 otverstiya s 45°:        #101=4  #102=45  #103=0   → 45° 135° 225° 315°
+  3 otverstiya nashi:        #101=3  #102=0   #103=120 → 0°  120° 240°
+  6 otverstiy:               #101=6  #102=0   #103=0   → 0°  60° 120° ... 300°
+  2 otverstiya:              #101=2  #102=0   #103=90  → 0°  90°
+  Nesimmetrichno:            #101=3  #102=10  #103=50  → 10° 60° 110°
+
+===========================================================

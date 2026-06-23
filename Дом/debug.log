@@ -1,0 +1,12 @@
+START
+tk ok
+ttk ok
+stdlib ok
+Creating Tk...
+Tk created
+geometry set
+Loading module...
+Module loaded
+Creating App...
+App created - entering mainloop
+5s timer - still alive

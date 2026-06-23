@@ -1,0 +1,168 @@
+%
+O0006 (RASFREZЕROVKA OTVERSTIYA - KRUGOVAYA INTERPOLYATSIYA)
+
+(!!!)  TREBUETSYA PREDSVERLENNOYE OTVERSTIYE  (!!!)
+(!!!  D_PREDSVERLENIYA ≥ D_FREZY + 2 MM  !!!)
+
+(--- GEOMETRIYA OTVERSTIYA ---)
+#101 = 50.0    (D_OTVERSTIYA_FINAL)
+#102 = 20.0    (D_PREDSVERLENIYA)
+#103 = 30.0    (GLUBINA_Z)
+#104 = 0.0     (X_CENTR)
+#105 = 0.0     (Y_CENTR)
+#106 = 50.0    (BEZOPASNAYA_VYSOTA_Z)
+#107 = 0.0     (NAPRAVLENIE: 0-PROTIV_CHASOVOY 1-PO_CHASOVOY)
+#108 = 0.0     (REZHIM: 0-CHERN_I_CHIST 1-TOLKO_CHISTOVOY)
+
+(--- CHERNOVOY INSTRUMENT ---)
+#111 = 16.0    (D_FREZY_1)
+#112 = 1.0     (NOMER_T1)
+#113 = 2500.0  (OBOROTY_S1)
+#114 = 600.0   (PODACHA_F1)
+#115 = 2.0     (SHAG_Z_NA_PROKHOD)
+#116 = 0.3     (PRIPUSK_NA_STENKU)
+
+(--- CHISTOVOY INSTRUMENT ---)
+#121 = 16.0    (D_FREZY_2)
+#122 = 2.0     (NOMER_T2)
+#123 = 3500.0  (OBOROTY_S2)
+#124 = 300.0   (PODACHA_F2)
+
+(--- VNUTRENNIE RASHETY ---)
+#131 = [#111 / 2]                  (RADIUS_FREZY_1)
+#132 = [#121 / 2]                  (RADIUS_FREZY_2)
+#133 = [#101 / 2]                  (RADIUS_OTVERSTIYA)
+#134 = [#133 - #131 - #116]        (R_TRAEKTORII_CHERN)
+#135 = [#133 - #132]               (R_TRAEKTORII_CHIST)
+#137 = 0                           (SCHETCHIK_GLUBINY)
+
+(--- START PROGRAMMY ---)
+G90 G54 G17 G40 G80
+
+(PROVERKA REZHIMA)
+IF [#108 EQ 1] GOTO 200
+
+(=== CHERNOVOY CIKL ===)
+T#112 M6
+S#113 M3
+M8
+
+G00 X[#104 + #134] Y#105
+G43 H#112 Z#106
+G01 Z1.0 F[#114 * 0.5]
+
+N100
+#137 = #137 + #115
+IF [#137 GT #103] THEN #137 = #103
+
+G01 Z-[#137] F[#114 * 0.4]
+
+IF [#107 EQ 1] GOTO 110
+(--- PROTIV CHASOVOY ---)
+G03 X[#104 + #134] Y#105 I[0 - #134] J0 F#114
+GOTO 120
+N110 (--- PO CHASOVOY ---)
+G02 X[#104 + #134] Y#105 I[0 - #134] J0 F#114
+N120
+
+IF [#137 LT #103] GOTO 100
+
+(LISHNY PROKHOD NA DNE DLYA CHISTOTY)
+IF [#107 EQ 1] GOTO 130
+G03 X[#104 + #134] Y#105 I[0 - #134] J0 F[#114 * 0.7]
+GOTO 140
+N130 G02 X[#104 + #134] Y#105 I[0 - #134] J0 F[#114 * 0.7]
+N140
+
+G00 Z#106 M9
+
+IF [#116 LE 0] GOTO 999
+
+(=== CHISTOVOY CIKL ===)
+N200
+T#122 M6
+S#123 M3
+M8
+G43 H#122 Z#106
+
+G00 X[#104 + #135] Y#105
+G01 Z-[#103] F[#124 * 2]
+
+IF [#107 EQ 1] GOTO 210
+(--- PROTIV CHASOVOY ---)
+G03 X[#104 + #135] Y#105 I[0 - #135] J0 F#124
+GOTO 220
+N210 (--- PO CHASOVOY ---)
+G02 X[#104 + #135] Y#105 I[0 - #135] J0 F#124
+N220
+
+(OTVOD)
+G00 Z#106 M9
+
+N999
+G91 G28 Z0 M5
+M30
+%
+
+
+===========================================================
+  OPISANIYE PARAMETROV
+===========================================================
+
+  GEOMETRIYA:
+  #101  D_OTVERSTIYA_FINAL      — diametr gotovogo otverstiya, mm
+  #102  D_PREDSVERLENIYA        — diametr predvaritel'no prosverlen. otverstiya, mm
+                                  (dolzhen byt' >= D_frezy_1 + 2 mm)
+  #103  GLUBINA_Z               — glubina obrabotki, mm
+  #104  X_CENTR                 — koordinata X tsentra otverstiya
+  #105  Y_CENTR                 — koordinata Y tsentra otverstiya
+  #106  BEZOPASNAYA_VYSOTA_Z    — vysota bystroy podachi, mm
+  #107  NAPRAVLENIE             — 0 = protiv chasovoy (G03)
+                                  1 = po chasovoy (G02)
+  #108  REZHIM                  — 0 = chernovoy + chistovoy
+                                  1 = tol'ko chistovoy (dorabotka)
+
+  CHERNOVOY INSTRUMENT (T1):
+  #111  D_FREZY_1               — diametr frezы, mm
+  #112  NOMER_T1                — nomer instrumenta
+  #113  OBOROTY_S1              — oboroty, ob/min
+  #114  PODACHA_F1              — podacha, mm/min
+  #115  SHAG_Z_NA_PROKHOD       — glubina za odin prokhod, mm
+  #116  PRIPUSK_NA_STENKU       — pripusk pod chistovuyu obrabotku, mm
+                                  0 = tol'ko odin instrument
+
+  CHISTOVOY INSTRUMENT (T2):
+  #121  D_FREZY_2               — diametr frezы, mm
+  #122  NOMER_T2                — nomer instrumenta
+  #123  OBOROTY_S2              — oboroty, ob/min
+  #124  PODACHA_F2              — podacha, mm/min
+
+===========================================================
+  LOGIKA RABOTY
+===========================================================
+
+  CHERNOVOY CIKL:
+    - freза stoit na radiuse R_traj_chern = D_final/2 - D_frezy/2 - pripusk
+    - opuskaetsya na SHAG_Z (40% ot podachi)
+    - delayet polnyy krug na etoy glubine
+    - povtoryayet do GLUBINA_Z
+    - v kontse — dopolnitel'nyy prokhod na dne (70% podachi)
+
+  CHISTOVOY CIKL:
+    - smena instrumenta
+    - bystryy spusk na polnuyu glubinu (200% podachi)
+    - odin polnyy krug na radiuse R_traj_chist = D_final/2 - D_frezy/2
+
+===========================================================
+  PRIMER: OTVERSTIYE D50mm, PREDSVERLENIYE D20mm
+===========================================================
+
+  Frezy: chern D16 (T1), chist D16 (T2)
+  R_traj_chern = 25 - 8 - 0.3 = 16.7 mm
+  R_traj_chist = 25 - 8       = 17.0 mm
+
+  Frezy: chern D20 (T1), chist D16 (T2)
+  R_traj_chern = 25 - 10 - 0.3 = 14.7 mm
+  R_traj_chist = 25 - 8        = 17.0 mm
+
+===========================================================

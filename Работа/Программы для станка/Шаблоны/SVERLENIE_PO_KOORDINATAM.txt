@@ -1,0 +1,137 @@
+%
+O0001 (SVERLENIE PO KOORDINATAM - DO 20 OTVERSTIY)
+
+(--- NASTROYKI ---)
+#100 = 5.0     (KOLICHESTVO_OTVERSTIY - ne bolee 20)
+#101 = 5.0     (Z_BEZOPASNO_NAD_DETALYU)
+#102 = 20.0    (GLUBINA_SVERLENIA - bez znaka)
+#103 = 3.0     (GLUBINA_PECKING_G83: 0 = G81 bez pecking)
+
+(--- INSTRUMENT ---)
+#111 = 8.0     (D_SVERLA)
+#112 = 3.0     (NOMER_T)
+#113 = 1500.0  (OBOROTY_S)
+#114 = 80.0    (PODACHA_F)
+
+(--- KOORDINATY OTVERSTIY X / Y ---)
+(zapolnit' nuzhnoye kolichestvo par, ostalnye ignoriruyutsya)
+#201 = 0.0     (X1)
+#202 = 0.0     (Y1)
+#203 = 50.0    (X2)
+#204 = 0.0     (Y2)
+#205 = 100.0   (X3)
+#206 = 0.0     (Y3)
+#207 = 0.0     (X4)
+#208 = 50.0    (Y4)
+#209 = 50.0    (X5)
+#210 = 50.0    (Y5)
+#211 = 100.0   (X6)
+#212 = 50.0    (Y6)
+#213 = 0.0     (X7)
+#214 = 100.0   (Y7)
+#215 = 50.0    (X8)
+#216 = 100.0   (Y8)
+#217 = 100.0   (X9)
+#218 = 100.0   (Y9)
+#219 = 150.0   (X10)
+#220 = 0.0     (Y10)
+#221 = 150.0   (X11)
+#222 = 50.0    (Y11)
+#223 = 150.0   (X12)
+#224 = 100.0   (Y12)
+#225 = 200.0   (X13)
+#226 = 0.0     (Y13)
+#227 = 200.0   (X14)
+#228 = 50.0    (Y14)
+#229 = 200.0   (X15)
+#230 = 100.0   (Y15)
+#231 = 0.0     (X16)
+#232 = 150.0   (Y16)
+#233 = 50.0    (X17)
+#234 = 150.0   (Y17)
+#235 = 100.0   (X18)
+#236 = 150.0   (Y18)
+#237 = 150.0   (X19)
+#238 = 150.0   (Y19)
+#239 = 200.0   (X20)
+#240 = 150.0   (Y20)
+
+(--- VNUTRENNIE ---)
+#150 = 0       (SCHETCHIK)
+#151 = 0       (SMESHCHENIYE_V_MASSIVE)
+
+(--- START PROGRAMMY ---)
+G90 G54 G17 G40 G80
+T#112 M6
+S#113 M3
+M8
+G43 H#112 Z50.0
+
+N100
+IF [#150 GE #100] GOTO 999
+
+(VYCHISLIT KOORDINATY TEKUSCHEGO OTVERSTIYA)
+#151 = [#150 * 2]
+#160 = #[201 + #151]    (X tekuschiy)
+#161 = #[202 + #151]    (Y tekuschiy)
+
+G00 X#160 Y#161
+G00 Z#101
+
+IF [#103 GT 0] GOTO 110
+(--- G81 PRYAMOYE SVERLENIE ---)
+G81 Z-[#102] R[#101] F#114
+GOTO 120
+N110
+(--- G83 S PECKINGOM ---)
+G83 Z-[#102] Q[#103] R[#101] F#114
+N120
+G80
+
+#150 = #150 + 1
+GOTO 100
+
+N999
+G00 Z50.0
+G91 G28 Z0 M5 M9
+M30
+%
+
+
+===========================================================
+  OPISANIYE PARAMETROV
+===========================================================
+
+  NASTROYKI:
+  #100  KOLICHESTVO_OTVERSTIY   — skol'ko otverstiy sverlit' (1-20)
+  #101  Z_BEZOPASNO             — vysota bystroy podachi nad detalyu, mm
+  #102  GLUBINA_SVERLENIA       — glubina, polozhitel'noye chislo
+  #103  GLUBINA_PECKING         — glubina vrezaniya za odin vkhod (G83)
+                                  0 = G81 (pryamoye sverlenie bez vyvoda)
+
+  INSTRUMENT:
+  #111  D_SVERLA                — diametr sverla, mm
+  #112  NOMER_T                 — nomer instrumenta
+  #113  OBOROTY_S               — ob/min
+  #114  PODACHA_F               — mm/min
+
+  KOORDINATY:
+  #201/#202  — X1/Y1  pervogo otverstiya
+  #203/#204  — X2/Y2  vtorogo
+  ...i t.d. do #239/#240 (X20/Y20)
+
+  Nezapolnennyye pary ignoriruyutsya (kontrol cherez #100).
+
+===========================================================
+  LOGIKA
+===========================================================
+
+  Programma prokhodik po parame #201..#240 cherez kosvennyyu
+  adresatsiyu (#[201 + schetchik*2]), i dlya kazhdogo otverstiya:
+    1. G00 k X/Y koordinate
+    2. G00 na Z_BEZOPASNO
+    3. G81 ili G83 do nuzhnoj glubiny
+    4. G80 otmena tsikla
+    5. Schetchik + 1, povtor
+
+===========================================================

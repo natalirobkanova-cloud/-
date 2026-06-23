@@ -1,0 +1,202 @@
+%
+O0007 (RASFREZЕROVKA OTVERSTIY 4 OS - KRUGOVAYA INTERPOLYATSIYA)
+
+(!!!)  TREBUETSYA PREDSVERLENNOYE OTVERSTIYE  (!!!)
+(!!!  D_PREDSVERLENIYA >= D_FREZY + 2 MM  !!!)
+
+(--- RASPOLOZHENIE OTVERSTIY ---)
+#101 = 4.0     (KOLICHESTVO_OTVERSTIY)
+#102 = 0.0     (UGOL_NACHALA_A - perviy ugol, grad)
+#103 = 0.0     (SHAG_UGLA: 0 = AVTO 360/N, ili vvesti vruchnuyu)
+
+(--- GEOMETRIYA OTVERSTIYA ---)
+#104 = 50.0    (D_OTVERSTIYA_FINAL)
+#105 = 20.0    (D_PREDSVERLENIYA)
+#106 = 0.0     (X_CENTR_OTVERSTIYA - rasstoyaniye ot osi vrashcheniya)
+#107 = 0.0     (Y_CENTR_OTVERSTIYA - obychno 0)
+#108 = 50.0    (Z_BEZOPASNO)
+#109 = 30.0    (GLUBINA_Z)
+#110 = 0.0     (NAPRAVLENIE: 0-PROTIV_CHASOVOY 1-PO_CHASOVOY)
+#117 = 0.0     (REZHIM: 0-CHERN_I_CHIST 1-TOLKO_CHISTOVOY)
+
+(--- CHERNOVOY INSTRUMENT ---)
+#111 = 16.0    (D_FREZY_1)
+#112 = 1.0     (NOMER_T1)
+#113 = 2500.0  (OBOROTY_S1)
+#114 = 600.0   (PODACHA_F1)
+#115 = 2.0     (SHAG_Z_NA_PROKHOD)
+#116 = 0.3     (PRIPUSK_NA_STENKU)
+
+(--- CHISTOVOY INSTRUMENT ---)
+#121 = 16.0    (D_FREZY_2)
+#122 = 2.0     (NOMER_T2)
+#123 = 3500.0  (OBOROTY_S2)
+#124 = 300.0   (PODACHA_F2)
+
+(--- VNUTRENNIE RASHETY ---)
+#131 = [#111 / 2]
+#132 = [#121 / 2]
+#133 = [#104 / 2]
+#134 = [#133 - #131 - #116]        (R_TRAEKTORII_CHERN)
+#135 = [#133 - #132]               (R_TRAEKTORII_CHIST)
+
+(SHAG UGLA)
+#152 = #103
+IF [#152 GT 0] GOTO 5
+#152 = [360.0 / #101]
+N5
+
+#150 = 0                            (SCHETCHIK_OTVERSTIY)
+#151 = #102                         (TEKUSCHIY_UGOL_A)
+
+(--- START PROGRAMMY ---)
+G90 G54 G17 G40 G80
+
+IF [#117 EQ 1] GOTO 200
+
+(=== CHERNOVOY CIKL - TSIKl PO VSEM OTVERSTIYAM ===)
+T#112 M6
+S#113 M3
+M8
+
+N50
+IF [#150 GE #101] GOTO 100
+
+G00 Z#108
+G00 A#151
+G00 X[#106 + #134] Y#107
+G43 H#112 Z#108
+G01 Z1.0 F[#114 * 0.5]
+
+#137 = 0                            (SBROS GLUBINY DLYA ETOGO OTVERSTIYA)
+N60
+  #137 = #137 + #115
+  IF [#137 GT #109] THEN #137 = #109
+
+  G01 Z-[#137] F[#114 * 0.4]
+
+  IF [#110 EQ 1] GOTO 65
+  G03 X[#106 + #134] Y#107 I[0 - #134] J0 F#114
+  GOTO 67
+N65 G02 X[#106 + #134] Y#107 I[0 - #134] J0 F#114
+N67
+
+IF [#137 LT #109] GOTO 60
+
+(LISHNY PROKHOD NA DNE)
+IF [#110 EQ 1] GOTO 68
+G03 X[#106 + #134] Y#107 I[0 - #134] J0 F[#114 * 0.7]
+GOTO 69
+N68 G02 X[#106 + #134] Y#107 I[0 - #134] J0 F[#114 * 0.7]
+N69
+
+G00 Z#108
+
+#150 = #150 + 1
+#151 = #151 + #152
+GOTO 50
+
+N100
+G00 Z#108 M9
+
+IF [#116 LE 0] GOTO 999
+
+(=== CHISTOVOY CIKL - SBROS SCHETCHIKA ===)
+N200
+#150 = 0
+#151 = #102
+
+T#122 M6
+S#123 M3
+M8
+
+N210
+IF [#150 GE #101] GOTO 999
+
+G00 Z#108
+G00 A#151
+G00 X[#106 + #135] Y#107
+G43 H#122 Z#108
+G01 Z-[#109] F[#124 * 2]
+
+IF [#110 EQ 1] GOTO 215
+G03 X[#106 + #135] Y#107 I[0 - #135] J0 F#124
+GOTO 220
+N215 G02 X[#106 + #135] Y#107 I[0 - #135] J0 F#124
+N220
+
+G00 Z#108
+
+#150 = #150 + 1
+#151 = #151 + #152
+GOTO 210
+
+N999
+G00 Z#108 M9 M5
+G91 G28 Z0
+M30
+%
+
+
+===========================================================
+  OPISANIYE PARAMETROV
+===========================================================
+
+  UGLOVOE RASPOLOZHENIE:
+  #101  KOLICHESTVO_OTVERSTIY   — skol'ko otverstiy frezеrovat'
+  #102  UGOL_NACHALA_A          — ugol A pervogo otverstiya, grad
+  #103  SHAG_UGLA               — ugol mezhdu otverstiyami
+                                  0 = avto = 360 / N
+
+  GEOMETRIYA OTVERSTIYA:
+  #104  D_OTVERSTIYA_FINAL      — diametr gotovogo otverstiya, mm
+  #105  D_PREDSVERLENIYA        — diametr predsverleniya, mm
+  #106  X_CENTR_OTVERSTIYA      — X koordinata tsentra otverstiya
+                                  (rasstoyaniye ot osi vrashcheniya A)
+  #107  Y_CENTR_OTVERSTIYA      — Y koordinata, obychno 0
+  #108  Z_BEZOPASNO             — vysota otvoda mezhdu otverstiyami
+  #109  GLUBINA_Z               — glubina frezerovaniya, mm
+  #110  NAPRAVLENIE             — 0 = G03 (protiv chasovoy)
+                                  1 = G02 (po chasovoy)
+  #117  REZHIM                  — 0 = chernovoy + chistovoy
+                                  1 = tol'ko chistovoy
+
+  CHERNOVOY INSTRUMENT (T1):
+  #111  D_FREZY_1               — diametr, mm
+  #112  NOMER_T1                — nomer instrumenta
+  #113  OBOROTY_S1              — ob/min
+  #114  PODACHA_F1              — mm/min
+  #115  SHAG_Z_NA_PROKHOD       — mm za odin prokhod
+  #116  PRIPUSK_NA_STENKU       — mm (0 = tol'ko odin instrument)
+
+  CHISTOVOY INSTRUMENT (T2):
+  #121  D_FREZY_2               — diametr, mm
+  #122  NOMER_T2                — nomer instrumenta
+  #123  OBOROTY_S2              — ob/min
+  #124  PODACHA_F2              — mm/min
+
+===========================================================
+  PORYADOK RABOTY
+===========================================================
+
+  Dlya kazhdogo otverstiya:
+    1. Otvod Z na bezopasnuyu vysotu (#108)
+    2. Povorot A v nuzhnyy ugol
+    3. Peremeshcheniye XY k tsentru otverstiya
+    4. Chernovoy cikl: spiralnyy spusk sloiyami + prokhody
+    5. Perekhodim k sleduyushchemu otverstiy
+
+  Posle vsekh chern. otverstiy:
+    6. Smena na chistovoy instrument
+    7. Chistovoy prokhod na kazhdoe otverstiye
+
+===========================================================
+  PRIMERY UGLOV
+===========================================================
+
+  4 otverstiya ravnomerno:   #101=4  #102=0   #103=0   → 0°  90° 180° 270°
+  3 otverstiya:              #101=3  #102=0   #103=120 → 0°  120° 240°
+  2 otverstiya:              #101=2  #102=0   #103=180 → 0°  180°
+  6 otverstiy:               #101=6  #102=30  #103=0   → 30° 90° 150° ... 330°
+
+===========================================================
