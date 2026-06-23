@@ -109,157 +109,157 @@ DEFAULT_DATA = {
     ('plastic','end_solid'):     {'vc':(150,500),  'fz':(0.05,0.20),'ap':(0.5,2.0), 'ae':(0.40,0.75),'coolant':'no', 'ap_abs':False,'notes':'Воздушный обдув. Острые кромки.'},
     ('plastic','end_hss'):       {'vc':(80,200),   'fz':(0.05,0.15),'ap':(0.5,1.5), 'ae':(0.40,0.75),'coolant':'no', 'ap_abs':False,'notes':''},
     ('plastic','end_indexable'): {'vc':(150,500),  'fz':(0.06,0.22),'ap':(0.5,2.0), 'ae':(0.40,0.75),'coolant':'no', 'ap_abs':False,'notes':''},
-    ('plastic','face'):          {'vc':(200,600),  'fz':(0.08,0.25),'ap':(1.0,5.0), 'ae':(0.60,0.80),'coolant':'no', 'ap_abs':False,'notes':''},
-    ('plastic','highfeed'):      {'vc':(200,800),  'fz':(0.80,2.50),'ap':(0.3,1.5), 'ae':(0.50,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Воздушный обдув.'},
+    ('plastic','face'):          {'vc':(200,600),  'fz':(0.08,0.25),'ap':(1.0,5.0), 'ae':(0.60,0.80),'coolant':'no', 'ap_abs':True,'notes':''},
+    ('plastic','highfeed'):      {'vc':(200,800),  'fz':(0.50,2.00),'ap':(0.3,1.5), 'ae':(0.50,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Воздушный обдув.'},
     ('plastic','ball_solid'):    {'vc':(100,400),  'fz':(0.03,0.12),'ap':(0.1,0.5), 'ae':(0.05,0.30),'coolant':'no', 'ap_abs':False,'notes':'Vc по эффективному диаметру.'},
     ('plastic','ball_indexable'):{'vc':(120,450),  'fz':(0.04,0.14),'ap':(0.1,0.5), 'ae':(0.05,0.30),'coolant':'no', 'ap_abs':False,'notes':''},
     ('plastic','tslot'):         {'vc':(80,250),   'fz':(0.03,0.10),'ap':(0.3,0.8), 'ae':(0.20,0.50),'coolant':'no', 'ap_abs':False,'notes':'Длинный вылет — снизить скорость.'},
     ('plastic','disc'):          {'vc':(100,350),  'fz':(0.04,0.15),'ap':(0.3,1.0), 'ae':(0.20,0.50),'coolant':'no', 'ap_abs':False,'notes':''},
     ('plastic','corner_radius'): {'vc':(120,450),  'fz':(0.04,0.16),'ap':(0.1,0.5), 'ae':(0.05,0.30),'coolant':'no', 'ap_abs':False,'notes':''},
-    ('plastic','chamfer'):       {'vc':(150,500),  'fz':(0.03,0.12),'ap':(0.2,1.0), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':False,'notes':''},
+    ('plastic','chamfer'):       {'vc':(150,500),  'fz':(0.03,0.12),'ap':(0.2,1.0), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':True,'notes':''},
 
     # ── АЛЮМИНИЙ ──────────────────────────────────────────────────────────────
     ('aluminum','end_solid'):     {'vc':(300,1200),'fz':(0.05,0.25),'ap':(0.5,3.0), 'ae':(0.40,0.75),'coolant':'opt','ap_abs':False,'notes':'TiB₂ или uncoated. Полированные канавки.'},
-    ('aluminum','end_hss'):       {'vc':(150,450), 'fz':(0.05,0.18),'ap':(0.5,2.0), 'ae':(0.40,0.75),'coolant':'opt','ap_abs':False,'notes':''},
+    ('aluminum','end_hss'):       {'vc':(100,350), 'fz':(0.05,0.18),'ap':(0.5,2.0), 'ae':(0.40,0.75),'coolant':'opt','ap_abs':False,'notes':''},
     ('aluminum','end_indexable'): {'vc':(300,1500),'fz':(0.08,0.35),'ap':(0.3,1.5), 'ae':(0.40,0.70),'coolant':'opt','ap_abs':False,'notes':'Пластины N, uncoated или TiB₂.'},
-    ('aluminum','face'):          {'vc':(500,2500),'fz':(0.10,0.60),'ap':(1.0,8.0), 'ae':(0.60,0.80),'coolant':'opt','ap_abs':False,'notes':'СОЖ при чистовой.'},
-    ('aluminum','highfeed'):      {'vc':(400,2000),'fz':(1.50,5.00),'ap':(0.5,3.0), 'ae':(0.60,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Сухая обработка или обдув.'},
+    ('aluminum','face'):          {'vc':(500,2500),'fz':(0.10,0.60),'ap':(1.0,8.0), 'ae':(0.60,0.80),'coolant':'opt','ap_abs':True,'notes':'СОЖ при чистовой.'},
+    ('aluminum','highfeed'):      {'vc':(400,2000),'fz':(0.80,3.00),'ap':(0.5,3.0), 'ae':(0.60,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Сухая обработка или обдув.'},
     ('aluminum','ball_solid'):    {'vc':(200,900), 'fz':(0.04,0.20),'ap':(0.1,0.5), 'ae':(0.05,0.30),'coolant':'opt','ap_abs':False,'notes':''},
     ('aluminum','ball_indexable'):{'vc':(300,1200),'fz':(0.08,0.30),'ap':(0.1,0.5), 'ae':(0.10,0.30),'coolant':'opt','ap_abs':False,'notes':''},
     ('aluminum','tslot'):         {'vc':(150,600), 'fz':(0.04,0.15),'ap':(0.3,1.0), 'ae':(0.20,0.50),'coolant':'opt','ap_abs':False,'notes':''},
     ('aluminum','disc'):          {'vc':(200,900), 'fz':(0.06,0.25),'ap':(0.3,1.2), 'ae':(0.20,0.50),'coolant':'opt','ap_abs':False,'notes':''},
     ('aluminum','corner_radius'): {'vc':(200,900), 'fz':(0.05,0.22),'ap':(0.1,0.5), 'ae':(0.05,0.30),'coolant':'opt','ap_abs':False,'notes':''},
-    ('aluminum','chamfer'):       {'vc':(300,1200),'fz':(0.04,0.18),'ap':(0.2,1.5), 'ae':(0.30,0.60),'coolant':'opt','ap_abs':False,'notes':''},
+    ('aluminum','chamfer'):       {'vc':(300,1200),'fz':(0.04,0.18),'ap':(0.2,1.5), 'ae':(0.30,0.60),'coolant':'opt','ap_abs':True,'notes':''},
 
     # ── КОНСТРУКЦИОННАЯ СТАЛЬ P1 ──────────────────────────────────────────────
     ('structural_steel','end_solid'):     {'vc':(80,220),  'fz':(0.04,0.15),'ap':(0.3,1.0), 'ae':(0.40,0.70),'coolant':'yes','ap_abs':False,'notes':'AlTiN. Обильный СОЖ.'},
-    ('structural_steel','end_hss'):       {'vc':(25,65),   'fz':(0.03,0.10),'ap':(0.3,0.8), 'ae':(0.40,0.65),'coolant':'yes','ap_abs':False,'notes':''},
+    ('structural_steel','end_hss'):       {'vc':(25,80),   'fz':(0.03,0.10),'ap':(0.3,0.8), 'ae':(0.40,0.65),'coolant':'yes','ap_abs':False,'notes':''},
     ('structural_steel','end_indexable'): {'vc':(100,280), 'fz':(0.05,0.20),'ap':(0.2,0.8), 'ae':(0.35,0.65),'coolant':'yes','ap_abs':False,'notes':'Пластины P.'},
-    ('structural_steel','face'):          {'vc':(150,380), 'fz':(0.10,0.45),'ap':(1.0,5.0), 'ae':(0.60,0.80),'coolant':'yes','ap_abs':False,'notes':''},
+    ('structural_steel','face'):          {'vc':(150,380), 'fz':(0.08,0.35),'ap':(1.0,5.0), 'ae':(0.60,0.80),'coolant':'yes','ap_abs':True,'notes':''},
     ('structural_steel','highfeed'):      {'vc':(120,300), 'fz':(0.80,2.50),'ap':(0.3,1.5), 'ae':(0.50,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Строго без СОЖ — воздушный обдув. XNMU/ONMU, TiAlN, 15–18°.'},
     ('structural_steel','ball_solid'):    {'vc':(60,160),  'fz':(0.02,0.10),'ap':(0.1,0.4), 'ae':(0.05,0.25),'coolant':'yes','ap_abs':False,'notes':''},
     ('structural_steel','ball_indexable'):{'vc':(80,200),  'fz':(0.05,0.15),'ap':(0.1,0.4), 'ae':(0.05,0.25),'coolant':'yes','ap_abs':False,'notes':''},
     ('structural_steel','tslot'):         {'vc':(40,100),  'fz':(0.02,0.07),'ap':(0.2,0.5), 'ae':(0.15,0.40),'coolant':'yes','ap_abs':False,'notes':'Длинный вылет — снижать скорость.'},
     ('structural_steel','disc'):          {'vc':(60,160),  'fz':(0.03,0.12),'ap':(0.2,0.6), 'ae':(0.15,0.40),'coolant':'yes','ap_abs':False,'notes':''},
     ('structural_steel','corner_radius'): {'vc':(70,180),  'fz':(0.03,0.12),'ap':(0.1,0.4), 'ae':(0.05,0.25),'coolant':'yes','ap_abs':False,'notes':''},
-    ('structural_steel','chamfer'):       {'vc':(80,200),  'fz':(0.02,0.10),'ap':(0.2,1.0), 'ae':(0.30,0.60),'coolant':'yes','ap_abs':False,'notes':''},
+    ('structural_steel','chamfer'):       {'vc':(80,200),  'fz':(0.02,0.10),'ap':(0.2,1.0), 'ae':(0.30,0.60),'coolant':'yes','ap_abs':True,'notes':''},
 
     # ── ЛЕГИРОВАННАЯ СТАЛЬ P2 ─────────────────────────────────────────────────
     ('alloy_steel','end_solid'):     {'vc':(50,160), 'fz':(0.03,0.12),'ap':(0.2,0.8), 'ae':(0.35,0.65),'coolant':'yes','ap_abs':False,'notes':'AlTiN или AlCrN.'},
     ('alloy_steel','end_hss'):       {'vc':(15,45),  'fz':(0.02,0.08),'ap':(0.2,0.6), 'ae':(0.35,0.60),'coolant':'yes','ap_abs':False,'notes':''},
     ('alloy_steel','end_indexable'): {'vc':(80,200), 'fz':(0.04,0.16),'ap':(0.15,0.6),'ae':(0.30,0.60),'coolant':'yes','ap_abs':False,'notes':''},
-    ('alloy_steel','face'):          {'vc':(100,260),'fz':(0.08,0.35),'ap':(0.5,4.0), 'ae':(0.55,0.75),'coolant':'yes','ap_abs':False,'notes':''},
+    ('alloy_steel','face'):          {'vc':(100,260),'fz':(0.08,0.35),'ap':(0.5,4.0), 'ae':(0.55,0.75),'coolant':'yes','ap_abs':True,'notes':''},
     ('alloy_steel','highfeed'):      {'vc':(100,250),'fz':(0.60,2.00),'ap':(0.3,1.2), 'ae':(0.50,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Строго без СОЖ — воздушный обдув.'},
     ('alloy_steel','ball_solid'):    {'vc':(40,130), 'fz':(0.02,0.08),'ap':(0.1,0.3), 'ae':(0.05,0.20),'coolant':'yes','ap_abs':False,'notes':''},
     ('alloy_steel','ball_indexable'):{'vc':(50,150), 'fz':(0.03,0.10),'ap':(0.1,0.3), 'ae':(0.05,0.20),'coolant':'yes','ap_abs':False,'notes':''},
     ('alloy_steel','tslot'):         {'vc':(25,80),  'fz':(0.02,0.05),'ap':(0.15,0.4),'ae':(0.15,0.35),'coolant':'yes','ap_abs':False,'notes':''},
     ('alloy_steel','disc'):          {'vc':(40,120), 'fz':(0.02,0.10),'ap':(0.15,0.5),'ae':(0.15,0.35),'coolant':'yes','ap_abs':False,'notes':''},
     ('alloy_steel','corner_radius'): {'vc':(45,135), 'fz':(0.02,0.09),'ap':(0.1,0.3), 'ae':(0.05,0.20),'coolant':'yes','ap_abs':False,'notes':''},
-    ('alloy_steel','chamfer'):       {'vc':(50,160), 'fz':(0.02,0.09),'ap':(0.2,0.8), 'ae':(0.30,0.60),'coolant':'yes','ap_abs':False,'notes':''},
+    ('alloy_steel','chamfer'):       {'vc':(50,160), 'fz':(0.02,0.09),'ap':(0.2,0.8), 'ae':(0.30,0.60),'coolant':'yes','ap_abs':True,'notes':''},
 
     # ── ТВЁРДАЯ СТАЛЬ P3 ──────────────────────────────────────────────────────
     ('hard_steel','end_solid'):     {'vc':(30,100), 'fz':(0.02,0.08),'ap':(0.1,0.5), 'ae':(0.25,0.55),'coolant':'yes','ap_abs':False,'notes':'AlCrN. Жёсткое закрепление.'},
     ('hard_steel','end_hss'):       {'vc':(8,25),   'fz':(0.01,0.05),'ap':(0.1,0.3), 'ae':(0.25,0.45),'coolant':'yes','ap_abs':False,'notes':'Не рекомендуется.'},
     ('hard_steel','end_indexable'): {'vc':(50,140), 'fz':(0.03,0.12),'ap':(0.1,0.4), 'ae':(0.25,0.50),'coolant':'yes','ap_abs':False,'notes':''},
-    ('hard_steel','face'):          {'vc':(80,220), 'fz':(0.06,0.25),'ap':(0.5,2.5), 'ae':(0.50,0.75),'coolant':'yes','ap_abs':False,'notes':''},
+    ('hard_steel','face'):          {'vc':(80,220), 'fz':(0.06,0.25),'ap':(0.5,2.5), 'ae':(0.50,0.75),'coolant':'yes','ap_abs':True,'notes':''},
     ('hard_steel','highfeed'):      {'vc':(80,200), 'fz':(0.40,1.50),'ap':(0.2,0.8), 'ae':(0.40,0.90),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Строго без СОЖ — воздушный обдув.'},
     ('hard_steel','ball_solid'):    {'vc':(25,80),  'fz':(0.01,0.06),'ap':(0.05,0.2),'ae':(0.03,0.15),'coolant':'yes','ap_abs':False,'notes':''},
     ('hard_steel','ball_indexable'):{'vc':(35,100), 'fz':(0.02,0.08),'ap':(0.05,0.2),'ae':(0.03,0.15),'coolant':'yes','ap_abs':False,'notes':''},
     ('hard_steel','tslot'):         {'vc':(15,50),  'fz':(0.01,0.04),'ap':(0.08,0.2),'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':'Крайне осторожно.'},
     ('hard_steel','disc'):          {'vc':(25,80),  'fz':(0.02,0.06),'ap':(0.08,0.2),'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':''},
     ('hard_steel','corner_radius'): {'vc':(28,88),  'fz':(0.01,0.05),'ap':(0.05,0.15),'ae':(0.03,0.12),'coolant':'yes','ap_abs':False,'notes':''},
-    ('hard_steel','chamfer'):       {'vc':(40,120), 'fz':(0.01,0.06),'ap':(0.1,0.5), 'ae':(0.25,0.50),'coolant':'yes','ap_abs':False,'notes':''},
+    ('hard_steel','chamfer'):       {'vc':(40,120), 'fz':(0.01,0.06),'ap':(0.1,0.5), 'ae':(0.25,0.50),'coolant':'yes','ap_abs':True,'notes':''},
 
     # ── СЕРЫЙ ЧУГУН K1 ────────────────────────────────────────────────────────
     ('cast_iron','end_solid'):     {'vc':(80,280),  'fz':(0.04,0.15),'ap':(0.3,1.0), 'ae':(0.40,0.70),'coolant':'no', 'ap_abs':False,'notes':'Сухая обработка или туман. AlTiN.'},
     ('cast_iron','end_hss'):       {'vc':(20,55),   'fz':(0.03,0.08),'ap':(0.3,0.7), 'ae':(0.35,0.65),'coolant':'no', 'ap_abs':False,'notes':''},
     ('cast_iron','end_indexable'): {'vc':(100,320), 'fz':(0.05,0.20),'ap':(0.2,0.8), 'ae':(0.35,0.65),'coolant':'no', 'ap_abs':False,'notes':'Пластины K.'},
-    ('cast_iron','face'):          {'vc':(150,450), 'fz':(0.10,0.45),'ap':(1.0,6.0), 'ae':(0.60,0.80),'coolant':'no', 'ap_abs':False,'notes':''},
+    ('cast_iron','face'):          {'vc':(150,450), 'fz':(0.10,0.45),'ap':(1.0,6.0), 'ae':(0.60,0.80),'coolant':'no', 'ap_abs':True,'notes':''},
     ('cast_iron','highfeed'):      {'vc':(200,500), 'fz':(1.00,3.00),'ap':(0.5,2.5), 'ae':(0.60,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Строго без СОЖ.'},
     ('cast_iron','ball_solid'):    {'vc':(60,220),  'fz':(0.03,0.12),'ap':(0.1,0.4), 'ae':(0.05,0.25),'coolant':'no', 'ap_abs':False,'notes':''},
     ('cast_iron','ball_indexable'):{'vc':(80,250),  'fz':(0.04,0.16),'ap':(0.1,0.4), 'ae':(0.05,0.25),'coolant':'no', 'ap_abs':False,'notes':''},
     ('cast_iron','tslot'):         {'vc':(40,110),  'fz':(0.02,0.07),'ap':(0.2,0.5), 'ae':(0.15,0.35),'coolant':'no', 'ap_abs':False,'notes':''},
     ('cast_iron','disc'):          {'vc':(60,200),  'fz':(0.03,0.15),'ap':(0.2,0.6), 'ae':(0.15,0.40),'coolant':'no', 'ap_abs':False,'notes':''},
     ('cast_iron','corner_radius'): {'vc':(70,210),  'fz':(0.03,0.12),'ap':(0.1,0.4), 'ae':(0.05,0.25),'coolant':'no', 'ap_abs':False,'notes':''},
-    ('cast_iron','chamfer'):       {'vc':(80,250),  'fz':(0.02,0.10),'ap':(0.2,1.0), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':False,'notes':''},
+    ('cast_iron','chamfer'):       {'vc':(80,250),  'fz':(0.02,0.10),'ap':(0.2,1.0), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':True,'notes':''},
 
     # ── ВЫСОКОПРОЧНЫЙ ЧУГУН K2 ────────────────────────────────────────────────
     ('ductile_iron','end_solid'):     {'vc':(60,200), 'fz':(0.03,0.12),'ap':(0.3,0.8), 'ae':(0.35,0.65),'coolant':'no', 'ap_abs':False,'notes':''},
     ('ductile_iron','end_hss'):       {'vc':(15,40),  'fz':(0.02,0.07),'ap':(0.2,0.6), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':False,'notes':''},
     ('ductile_iron','end_indexable'): {'vc':(80,250), 'fz':(0.04,0.18),'ap':(0.2,0.7), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':False,'notes':''},
-    ('ductile_iron','face'):          {'vc':(100,300),'fz':(0.08,0.38),'ap':(0.5,4.5), 'ae':(0.55,0.75),'coolant':'no', 'ap_abs':False,'notes':''},
+    ('ductile_iron','face'):          {'vc':(100,300),'fz':(0.08,0.38),'ap':(0.5,4.5), 'ae':(0.55,0.75),'coolant':'no', 'ap_abs':True,'notes':''},
     ('ductile_iron','highfeed'):      {'vc':(150,400),'fz':(0.80,2.50),'ap':(0.4,2.0), 'ae':(0.55,1.00),'coolant':'no', 'ap_abs':True, 'notes':'ap абс. мм. Строго без СОЖ.'},
     ('ductile_iron','ball_solid'):    {'vc':(50,160), 'fz':(0.02,0.10),'ap':(0.1,0.3), 'ae':(0.05,0.20),'coolant':'no', 'ap_abs':False,'notes':''},
     ('ductile_iron','ball_indexable'):{'vc':(60,180), 'fz':(0.03,0.12),'ap':(0.1,0.3), 'ae':(0.05,0.20),'coolant':'no', 'ap_abs':False,'notes':''},
     ('ductile_iron','tslot'):         {'vc':(30,90),  'fz':(0.02,0.05),'ap':(0.15,0.4),'ae':(0.12,0.30),'coolant':'no', 'ap_abs':False,'notes':''},
     ('ductile_iron','disc'):          {'vc':(50,160), 'fz':(0.03,0.12),'ap':(0.15,0.5),'ae':(0.12,0.35),'coolant':'no', 'ap_abs':False,'notes':''},
     ('ductile_iron','corner_radius'): {'vc':(55,170), 'fz':(0.02,0.10),'ap':(0.1,0.3), 'ae':(0.05,0.20),'coolant':'no', 'ap_abs':False,'notes':''},
-    ('ductile_iron','chamfer'):       {'vc':(65,200), 'fz':(0.02,0.08),'ap':(0.2,0.8), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':False,'notes':''},
+    ('ductile_iron','chamfer'):       {'vc':(65,200), 'fz':(0.02,0.08),'ap':(0.2,0.8), 'ae':(0.30,0.60),'coolant':'no', 'ap_abs':True,'notes':''},
 
     # ── НЕРЖАВЕЙКА M1 ─────────────────────────────────────────────────────────
     ('stainless','end_solid'):     {'vc':(40,130), 'fz':(0.03,0.10),'ap':(0.2,0.7), 'ae':(0.30,0.60),'coolant':'yes','ap_abs':False,'notes':'Обильный СОЖ! Не останавливаться — наклёп.'},
     ('stainless','end_hss'):       {'vc':(12,32),  'fz':(0.02,0.06),'ap':(0.2,0.5), 'ae':(0.30,0.55),'coolant':'yes','ap_abs':False,'notes':''},
     ('stainless','end_indexable'): {'vc':(50,160), 'fz':(0.03,0.12),'ap':(0.15,0.5),'ae':(0.25,0.55),'coolant':'yes','ap_abs':False,'notes':'Пластины M.'},
-    ('stainless','face'):          {'vc':(80,220), 'fz':(0.06,0.28),'ap':(0.5,3.5), 'ae':(0.55,0.75),'coolant':'yes','ap_abs':False,'notes':''},
+    ('stainless','face'):          {'vc':(80,220), 'fz':(0.05,0.20),'ap':(0.5,3.5), 'ae':(0.55,0.75),'coolant':'yes','ap_abs':True,'notes':''},
     ('stainless','highfeed'):      {'vc':(80,180), 'fz':(0.50,1.50),'ap':(0.2,0.8), 'ae':(0.40,0.80),'coolant':'yes','ap_abs':True, 'notes':'ap абс. мм. СОЖ обязателен — предотвращение наклёпа.'},
     ('stainless','ball_solid'):    {'vc':(30,95),  'fz':(0.02,0.07),'ap':(0.08,0.3),'ae':(0.03,0.18),'coolant':'yes','ap_abs':False,'notes':''},
     ('stainless','ball_indexable'):{'vc':(40,120), 'fz':(0.03,0.10),'ap':(0.08,0.3),'ae':(0.03,0.18),'coolant':'yes','ap_abs':False,'notes':''},
     ('stainless','tslot'):         {'vc':(20,65),  'fz':(0.01,0.04),'ap':(0.15,0.4),'ae':(0.12,0.30),'coolant':'yes','ap_abs':False,'notes':''},
     ('stainless','disc'):          {'vc':(30,90),  'fz':(0.02,0.08),'ap':(0.15,0.4),'ae':(0.12,0.30),'coolant':'yes','ap_abs':False,'notes':''},
     ('stainless','corner_radius'): {'vc':(35,105), 'fz':(0.02,0.07),'ap':(0.08,0.3),'ae':(0.03,0.18),'coolant':'yes','ap_abs':False,'notes':''},
-    ('stainless','chamfer'):       {'vc':(40,130), 'fz':(0.01,0.06),'ap':(0.15,0.8),'ae':(0.25,0.55),'coolant':'yes','ap_abs':False,'notes':''},
+    ('stainless','chamfer'):       {'vc':(40,130), 'fz':(0.01,0.06),'ap':(0.15,0.8),'ae':(0.25,0.55),'coolant':'yes','ap_abs':True,'notes':''},
 
     # ── ДУПЛЕКС M2 ────────────────────────────────────────────────────────────
     ('duplex','end_solid'):     {'vc':(25,85),  'fz':(0.02,0.08),'ap':(0.15,0.5),'ae':(0.25,0.50),'coolant':'yes','ap_abs':False,'notes':'Высокое давление СОЖ. Острые кромки.'},
-    ('duplex','end_hss'):       {'vc':(8,20),   'fz':(0.01,0.04),'ap':(0.1,0.3), 'ae':(0.20,0.40),'coolant':'yes','ap_abs':False,'notes':'Не рекомендуется.'},
+    ('duplex','end_hss'):       {'vc':(5,15),   'fz':(0.01,0.04),'ap':(0.1,0.3), 'ae':(0.20,0.40),'coolant':'yes','ap_abs':False,'notes':'Не рекомендуется.'},
     ('duplex','end_indexable'): {'vc':(30,95),  'fz':(0.03,0.10),'ap':(0.1,0.4), 'ae':(0.20,0.45),'coolant':'yes','ap_abs':False,'notes':''},
-    ('duplex','face'):          {'vc':(50,140), 'fz':(0.05,0.22),'ap':(0.3,2.5), 'ae':(0.50,0.70),'coolant':'yes','ap_abs':False,'notes':''},
+    ('duplex','face'):          {'vc':(50,140), 'fz':(0.05,0.22),'ap':(0.3,2.5), 'ae':(0.50,0.70),'coolant':'yes','ap_abs':True,'notes':''},
     ('duplex','highfeed'):      {'vc':(50,130), 'fz':(0.30,1.00),'ap':(0.15,0.6),'ae':(0.35,0.70),'coolant':'yes','ap_abs':True, 'notes':'ap абс. мм. СОЖ обязателен.'},
     ('duplex','ball_solid'):    {'vc':(20,65),  'fz':(0.01,0.05),'ap':(0.05,0.2),'ae':(0.03,0.12),'coolant':'yes','ap_abs':False,'notes':''},
     ('duplex','ball_indexable'):{'vc':(25,80),  'fz':(0.02,0.06),'ap':(0.05,0.2),'ae':(0.03,0.12),'coolant':'yes','ap_abs':False,'notes':''},
     ('duplex','tslot'):         {'vc':(15,45),  'fz':(0.01,0.03),'ap':(0.1,0.3), 'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':''},
     ('duplex','disc'):          {'vc':(20,65),  'fz':(0.02,0.06),'ap':(0.1,0.3), 'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':''},
     ('duplex','corner_radius'): {'vc':(22,70),  'fz':(0.01,0.05),'ap':(0.05,0.18),'ae':(0.03,0.10),'coolant':'yes','ap_abs':False,'notes':''},
-    ('duplex','chamfer'):       {'vc':(28,90),  'fz':(0.01,0.05),'ap':(0.1,0.5), 'ae':(0.20,0.45),'coolant':'yes','ap_abs':False,'notes':''},
+    ('duplex','chamfer'):       {'vc':(28,90),  'fz':(0.01,0.05),'ap':(0.1,0.5), 'ae':(0.20,0.45),'coolant':'yes','ap_abs':True,'notes':''},
 
     # ── ТИТАН S1 ──────────────────────────────────────────────────────────────
     ('titanium','end_solid'):     {'vc':(30,90),  'fz':(0.02,0.08),'ap':(0.2,0.8), 'ae':(0.30,0.60),'coolant':'yes','ap_abs':False,'notes':'ОБЯЗАТЕЛЕН СОЖ! Опасность возгорания стружки.'},
     ('titanium','end_hss'):       {'vc':(8,20),   'fz':(0.01,0.04),'ap':(0.1,0.4), 'ae':(0.25,0.50),'coolant':'yes','ap_abs':False,'notes':''},
     ('titanium','end_indexable'): {'vc':(40,110), 'fz':(0.03,0.10),'ap':(0.15,0.5),'ae':(0.25,0.55),'coolant':'yes','ap_abs':False,'notes':''},
-    ('titanium','face'):          {'vc':(50,130), 'fz':(0.05,0.20),'ap':(0.3,2.5), 'ae':(0.50,0.70),'coolant':'yes','ap_abs':False,'notes':''},
+    ('titanium','face'):          {'vc':(50,130), 'fz':(0.05,0.20),'ap':(0.3,2.5), 'ae':(0.50,0.70),'coolant':'yes','ap_abs':True,'notes':''},
     ('titanium','highfeed'):      {'vc':(40,100), 'fz':(0.30,1.00),'ap':(0.2,0.8), 'ae':(0.30,0.65),'coolant':'yes','ap_abs':True, 'notes':'ap абс. мм. СОЖ ОБЯЗАТЕЛЕН — пожарная безопасность!'},
     ('titanium','ball_solid'):    {'vc':(20,65),  'fz':(0.01,0.05),'ap':(0.05,0.2),'ae':(0.03,0.12),'coolant':'yes','ap_abs':False,'notes':''},
     ('titanium','ball_indexable'):{'vc':(25,80),  'fz':(0.02,0.07),'ap':(0.05,0.2),'ae':(0.03,0.12),'coolant':'yes','ap_abs':False,'notes':''},
     ('titanium','tslot'):         {'vc':(15,45),  'fz':(0.01,0.03),'ap':(0.1,0.3), 'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':''},
     ('titanium','disc'):          {'vc':(20,65),  'fz':(0.02,0.06),'ap':(0.1,0.3), 'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':''},
     ('titanium','corner_radius'): {'vc':(22,70),  'fz':(0.01,0.05),'ap':(0.05,0.18),'ae':(0.03,0.10),'coolant':'yes','ap_abs':False,'notes':''},
-    ('titanium','chamfer'):       {'vc':(28,90),  'fz':(0.01,0.05),'ap':(0.1,0.5), 'ae':(0.20,0.45),'coolant':'yes','ap_abs':False,'notes':''},
+    ('titanium','chamfer'):       {'vc':(28,90),  'fz':(0.01,0.05),'ap':(0.1,0.5), 'ae':(0.20,0.45),'coolant':'yes','ap_abs':True,'notes':''},
 
     # ── ЖАРОПРОЧНЫЕ S2 ────────────────────────────────────────────────────────
     ('heat_resistant','end_solid'):     {'vc':(15,55),  'fz':(0.01,0.06), 'ap':(0.1,0.4), 'ae':(0.20,0.50),'coolant':'yes','ap_abs':False,'notes':'Высокое давление СОЖ. Не останавливать подачу!'},
-    ('heat_resistant','end_hss'):       {'vc':(5,15),   'fz':(0.005,0.03),'ap':(0.05,0.2),'ae':(0.15,0.35),'coolant':'yes','ap_abs':False,'notes':'Не рекомендуется.'},
+    ('heat_resistant','end_hss'):       {'vc':(3,10),   'fz':(0.005,0.03),'ap':(0.05,0.2),'ae':(0.15,0.35),'coolant':'yes','ap_abs':False,'notes':'Не рекомендуется.'},
     ('heat_resistant','end_indexable'): {'vc':(20,65),  'fz':(0.02,0.08), 'ap':(0.1,0.3), 'ae':(0.15,0.45),'coolant':'yes','ap_abs':False,'notes':''},
-    ('heat_resistant','face'):          {'vc':(25,75),  'fz':(0.03,0.12), 'ap':(0.2,1.5), 'ae':(0.40,0.65),'coolant':'yes','ap_abs':False,'notes':''},
+    ('heat_resistant','face'):          {'vc':(25,75),  'fz':(0.03,0.12), 'ap':(0.2,1.5), 'ae':(0.40,0.65),'coolant':'yes','ap_abs':True,'notes':''},
     ('heat_resistant','highfeed'):      {'vc':(20,60),  'fz':(0.20,0.60), 'ap':(0.1,0.5), 'ae':(0.25,0.55),'coolant':'yes','ap_abs':True, 'notes':'ap абс. мм. СОЖ высокое давление.'},
     ('heat_resistant','ball_solid'):    {'vc':(10,38),  'fz':(0.01,0.04), 'ap':(0.03,0.12),'ae':(0.02,0.08),'coolant':'yes','ap_abs':False,'notes':''},
     ('heat_resistant','ball_indexable'):{'vc':(15,45),  'fz':(0.01,0.05), 'ap':(0.03,0.12),'ae':(0.02,0.08),'coolant':'yes','ap_abs':False,'notes':''},
     ('heat_resistant','tslot'):         {'vc':(8,28),   'fz':(0.005,0.02),'ap':(0.05,0.18),'ae':(0.08,0.20),'coolant':'yes','ap_abs':False,'notes':''},
     ('heat_resistant','disc'):          {'vc':(10,35),  'fz':(0.01,0.04), 'ap':(0.05,0.18),'ae':(0.08,0.20),'coolant':'yes','ap_abs':False,'notes':''},
     ('heat_resistant','corner_radius'): {'vc':(12,40),  'fz':(0.01,0.03), 'ap':(0.03,0.10),'ae':(0.02,0.06),'coolant':'yes','ap_abs':False,'notes':''},
-    ('heat_resistant','chamfer'):       {'vc':(15,50),  'fz':(0.005,0.03),'ap':(0.05,0.3), 'ae':(0.15,0.40),'coolant':'yes','ap_abs':False,'notes':''},
+    ('heat_resistant','chamfer'):       {'vc':(15,50),  'fz':(0.005,0.03),'ap':(0.05,0.3), 'ae':(0.15,0.40),'coolant':'yes','ap_abs':True,'notes':''},
 
     # ── ЗАКАЛЁННАЯ СТАЛЬ H ────────────────────────────────────────────────────
     ('hardened','end_solid'):     {'vc':(30,105), 'fz':(0.02,0.06), 'ap':(0.05,0.3), 'ae':(0.15,0.45),'coolant':'yes','ap_abs':False,'notes':'CBN или субмикронный ТС. Жёсткость станка!'},
-    ('hardened','end_hss'):       {'vc':(5,15),   'fz':(0.01,0.03), 'ap':(0.03,0.1), 'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':'Крайне не рекомендуется.'},
+    ('hardened','end_hss'):       {'vc':(3,8),   'fz':(0.01,0.03), 'ap':(0.03,0.1), 'ae':(0.10,0.25),'coolant':'yes','ap_abs':False,'notes':'Крайне не рекомендуется.'},
     ('hardened','end_indexable'): {'vc':(40,125), 'fz':(0.02,0.08), 'ap':(0.05,0.2), 'ae':(0.15,0.40),'coolant':'yes','ap_abs':False,'notes':'Пластины H, CBN/PcBN.'},
-    ('hardened','face'):          {'vc':(60,200), 'fz':(0.05,0.16), 'ap':(0.1,0.9),  'ae':(0.40,0.65),'coolant':'yes','ap_abs':False,'notes':''},
+    ('hardened','face'):          {'vc':(60,200), 'fz':(0.05,0.16), 'ap':(0.1,0.9),  'ae':(0.40,0.65),'coolant':'yes','ap_abs':True,'notes':''},
     ('hardened','highfeed'):      {'vc':(50,150), 'fz':(0.20,0.80), 'ap':(0.05,0.3), 'ae':(0.30,0.60),'coolant':'yes','ap_abs':True, 'notes':'ap абс. мм. CBN пластины HF-типа.'},
     ('hardened','ball_solid'):    {'vc':(25,85),  'fz':(0.01,0.04), 'ap':(0.02,0.1), 'ae':(0.02,0.08),'coolant':'yes','ap_abs':False,'notes':'CBN шаровые. Чистовая.'},
     ('hardened','ball_indexable'):{'vc':(30,100), 'fz':(0.01,0.05), 'ap':(0.02,0.1), 'ae':(0.02,0.08),'coolant':'yes','ap_abs':False,'notes':''},
     ('hardened','tslot'):         {'vc':(15,55),  'fz':(0.005,0.02),'ap':(0.03,0.1), 'ae':(0.08,0.20),'coolant':'yes','ap_abs':False,'notes':'Крайне осторожно.'},
     ('hardened','disc'):          {'vc':(20,65),  'fz':(0.01,0.04), 'ap':(0.03,0.1), 'ae':(0.08,0.20),'coolant':'yes','ap_abs':False,'notes':''},
     ('hardened','corner_radius'): {'vc':(28,90),  'fz':(0.01,0.03), 'ap':(0.02,0.08),'ae':(0.02,0.06),'coolant':'yes','ap_abs':False,'notes':''},
-    ('hardened','chamfer'):       {'vc':(40,130), 'fz':(0.01,0.04), 'ap':(0.05,0.3), 'ae':(0.20,0.45),'coolant':'yes','ap_abs':False,'notes':''},
+    ('hardened','chamfer'):       {'vc':(40,130), 'fz':(0.01,0.04), 'ap':(0.05,0.3), 'ae':(0.20,0.45),'coolant':'yes','ap_abs':True,'notes':''},
 }
 
 FALLBACK = {'end_hss':'end_solid','ball_indexable':'ball_solid',
@@ -380,8 +380,9 @@ class MainWindow(tk.Tk):
                     on_next=self._show_result,
                     on_back=lambda: self._open_s2(self._last_mat))
 
-    def _show_result(self, mat, cutter_key, cutter_name, has_ins, db_key, D, z, ae_pct):
-        ResultWindow(self, mat, cutter_name, has_ins, db_key, D, z, ae_pct)
+    def _show_result(self, mat, cutter_key, cutter_name, has_ins, db_key,
+                     D, z, ae_pct, machine_type='highspeed'):
+        ResultWindow(self, mat, cutter_name, has_ins, db_key, D, z, ae_pct, machine_type)
 
     def _settings(self):
         SettingsWindow(self)
@@ -538,57 +539,97 @@ class Step2Dialog(BaseDialog):
 class Step3Dialog(BaseDialog):
     def __init__(self, parent, mat, cutter_key, cutter_name, has_ins, db_key,
                  on_next, on_back=None):
-        super().__init__(parent, 'Параметры инструмента', 3, 3, 500, 480)
+        super().__init__(parent, 'Параметры инструмента', 3, 3, 540, 640)
+        self.minsize(520, 580)
         self._args = (mat, cutter_key, cutter_name, has_ins, db_key)
         self._on_next = on_next
         self._on_back = on_back
+        self._mach = tk.StringVar(value='highspeed')
+        self._mach_cards = {}
         self._build()
 
     def _build(self):
         mat, cutter_key, cutter_name, has_ins, db_key = self._args
-        mat_name = next(n for k,n,*_ in MATERIALS if k==mat)
+        mat_name = next(n for k, n, *_ in MATERIALS if k == mat)
 
         tk.Label(self.body, text=f'{mat_name}   /   {cutter_name}',
-                 bg=BG, fg=DIM, font=F_S).pack(anchor='w', pady=(0,16))
+                 bg=BG, fg=DIM, font=F_S).pack(anchor='w', pady=(0, 10))
 
-        def row(parent, label, var, default, hint=''):
-            f = tk.Frame(parent, bg=BG)
-            f.pack(fill='x', pady=6)
-            tk.Label(f, text=label, bg=BG, fg=TEXT, font=F_B, width=22, anchor='w').pack(side='left')
+        def row(label, var, default, hint=''):
+            f = tk.Frame(self.body, bg=BG)
+            f.pack(fill='x', pady=5)
+            tk.Label(f, text=label, bg=BG, fg=TEXT, font=F_B,
+                    width=22, anchor='w').pack(side='left')
             e = tk.Entry(f, textvariable=var, width=10, bg=CARD, fg=TEXT,
-                         insertbackground=TEXT, font=F_M, relief='flat', bd=4)
-            e.pack(side='left', padx=(0,8))
+                        insertbackground=TEXT, font=F_M, relief='flat', bd=4)
+            e.pack(side='left', padx=(0, 8))
             if hint:
                 tk.Label(f, text=hint, bg=BG, fg=DIM, font=F_S).pack(side='left')
             var.set(default)
+            e.bind('<KeyRelease>', lambda _: self._upd_ae())
             return e
 
         self._D = tk.StringVar()
         self._z = tk.StringVar()
-        row(self.body, 'Диаметр фрезы  D (мм)', self._D, '12', 'мм')
-        row(self.body, 'Число зубьев  z',        self._z, '4',  'шт')
+        row('Диаметр фрезы  D (мм)', self._D, '12', 'мм')
+        row('Число зубьев  z',       self._z, '4',  'шт')
 
         # ae slider
-        tk.Label(self.body, text='Перекрытие  ae  (% от D)',
-                 bg=BG, fg=TEXT, font=F_B).pack(anchor='w', pady=(14,4))
+        tk.Label(self.body, text='Радиальное перекрытие  ae',
+                bg=BG, fg=TEXT, font=F_B).pack(anchor='w', pady=(12, 4))
 
         self._ae = tk.IntVar(value=50)
         sl_f = tk.Frame(self.body, bg=CARD, padx=12, pady=8)
         sl_f.pack(fill='x')
         sl = tk.Scale(sl_f, from_=5, to=100, orient='horizontal',
-                      variable=self._ae, bg=CARD, fg=TEXT,
-                      troughcolor=BORDER, highlightthickness=0,
-                      activebackground=ACCENT, font=F_S, showvalue=False,
-                      command=lambda _: self._upd_ae())
+                     variable=self._ae, bg=CARD, fg=TEXT,
+                     troughcolor=BORDER, highlightthickness=0,
+                     activebackground=ACCENT, font=F_S, showvalue=False,
+                     command=lambda _: self._upd_ae())
         sl.pack(fill='x')
-        self._ae_lbl = tk.Label(sl_f, text='ae = 50%', bg=CARD, fg=ACCENT, font=F_B)
+        self._ae_lbl = tk.Label(sl_f, text='ae = 50% от D',
+                               bg=CARD, fg=ACCENT, font=F_B)
         self._ae_lbl.pack()
-        self._upd_ae()
+
+        # ae canvas preview
+        self._ae_canvas = tk.Canvas(self.body, bg=BG, height=120,
+                                   bd=0, highlightthickness=0)
+        self._ae_canvas.pack(fill='x', pady=(6, 0))
+        self._ae_canvas.bind('<Configure>',
+                            lambda e: self._draw_ae(self._ae.get() / 100.0))
+        self._draw_ae(0.5)
+
+        # machine type
+        tk.Label(self.body, text='Тип станка', bg=BG, fg=TEXT,
+                font=F_B).pack(anchor='w', pady=(14, 6))
+        mf = tk.Frame(self.body, bg=BG)
+        mf.pack(fill='x')
+        for key, title, sub in [
+            ('lowspeed',  'LIC / HAS',      'до 3 000 об/мин'),
+            ('highspeed', 'АКИРА / VISION', 'до 10 000 об/мин'),
+        ]:
+            f = tk.Frame(mf, bg=CARD, cursor='hand2', padx=14, pady=10)
+            f.pack(side='left', fill='x', expand=True, padx=(0, 6))
+            l1 = tk.Label(f, text=title, bg=CARD, fg=TEXT, font=F_B)
+            l1.pack(anchor='w')
+            l2 = tk.Label(f, text=sub, bg=CARD, fg=DIM, font=F_S)
+            l2.pack(anchor='w')
+            self._mach_cards[key] = (f, l1, l2)
+            for w in (f, l1, l2):
+                w.bind('<Button-1>', lambda e, k=key: self._sel_mach(k))
+        self._sel_mach('highspeed')
 
         styled_btn(self.foot, '← Назад', self._back, primary=False).pack(
             side='left', padx=16)
         styled_btn(self.foot, 'Рассчитать  →', self._next, primary=True).pack(
             side='right', padx=16)
+
+    def _sel_mach(self, key):
+        self._mach.set(key)
+        for k, (f, l1, l2) in self._mach_cards.items():
+            bg = CARD_S if k == key else CARD
+            for w in (f, l1, l2):
+                w.config(bg=bg)
 
     def _back(self):
         self.destroy()
@@ -598,9 +639,63 @@ class Step3Dialog(BaseDialog):
     def _upd_ae(self):
         try:
             D = float(self._D.get())
-            self._ae_lbl.config(text=f'ae = {self._ae.get()}%  =  {D*self._ae.get()/100:.2f} мм')
+            pct = self._ae.get()
+            self._ae_lbl.config(
+                text=f'ae = {pct}%  =  {D * pct / 100:.2f} мм')
         except Exception:
             self._ae_lbl.config(text=f'ae = {self._ae.get()}%')
+        self._draw_ae(self._ae.get() / 100.0)
+
+    def _draw_ae(self, ae_pct):
+        c = self._ae_canvas
+        W = c.winfo_width()
+        if W < 100:
+            W = 500
+        H = 120
+        r = 32
+        cy = 73
+        mx1, mx2 = 10, int(W * 0.52)
+        my1, my2 = cy - r - 4, cy + r + 4
+        cx = int(mx2 + r * (1.0 - 2.0 * ae_pct))
+
+        c.delete('all')
+        c.config(bg=BG)
+
+        # material body
+        c.create_rectangle(mx1, my1, mx2, my2,
+                          fill='#192234', outline=BORDER, width=1)
+
+        # overlap fill (cutter circle clipped to material right edge)
+        if ae_pct > 0.005:
+            c.create_oval(cx - r, cy - r, cx + r, cy + r,
+                         fill=ACCENT, stipple='gray25', outline='')
+            c.create_rectangle(mx2 + 1, 0, W + 10, H + 10, fill=BG, outline='')
+
+        # cutter outline
+        c.create_oval(cx - r, cy - r, cx + r, cy + r,
+                     fill='', outline=ACCENT, width=2)
+
+        # material border (redraw on top)
+        c.create_rectangle(mx1, my1, mx2, my2,
+                          fill='', outline=BORDER, width=1)
+        c.create_text((mx1 + mx2) // 2, my2 + 9,
+                     text='Заготовка', fill=DIM, font=('Segoe UI', 7))
+
+        # ae dimension annotation
+        ov_left = max(cx - r, mx1)
+        ov_right = mx2
+        if ov_left < ov_right - 4 and ae_pct > 0.02:
+            ay = my1 - 8
+            c.create_line(ov_left, ay, ov_right, ay, fill=YELLOW, width=1)
+            c.create_line(ov_left, ay - 3, ov_left, ay + 3, fill=YELLOW, width=1)
+            c.create_line(ov_right, ay - 3, ov_right, ay + 3, fill=YELLOW, width=1)
+            lx = (ov_left + ov_right) // 2
+            c.create_text(lx, ay - 9, text=f'ae = {int(ae_pct * 100)}%',
+                         fill=YELLOW, font=('Consolas', 8, 'bold'))
+
+        # cutter label
+        c.create_text(cx, cy, text='⌀D', fill=TEXT,
+                     font=('Segoe UI', 8, 'bold'))
 
     def _next(self):
         try:
@@ -618,46 +713,129 @@ class Step3Dialog(BaseDialog):
         mat, cutter_key, cutter_name, has_ins, db_key = self._args
         self.destroy()
         self._on_next(mat, cutter_key, cutter_name, has_ins, db_key,
-                      D, z, self._ae.get() / 100.0)
+                      D, z, self._ae.get() / 100.0, self._mach.get())
 
 # ─── РЕЗУЛЬТАТ ────────────────────────────────────────────────────────────────
 class ResultWindow(tk.Toplevel):
-    def __init__(self, parent, mat, cutter_name, has_ins, db_key, D, z, ae_pct):
+    _MAX_RPM  = {'lowspeed': 3000,  'highspeed': 10000}
+    _MACH_LBL = {'lowspeed': 'LIC / HAS  (до 3 000 об/мин)',
+                 'highspeed': 'АКИРА / VISION  (до 10 000 об/мин)'}
+
+    def __init__(self, parent, mat, cutter_name, has_ins, db_key,
+                 D, z, ae_pct, machine_type='highspeed'):
         super().__init__(parent)
         self.title('Результат — Режимы резания')
         self.configure(bg=BG)
         self.resizable(True, True)
         self.grab_set()
-        center(self, 700, 640)
+        center(self, 720, 700)
         self.transient(parent)
-        self._build(mat, cutter_name, has_ins, db_key, D, z, ae_pct)
+        self._build(mat, cutter_name, has_ins, db_key, D, z, ae_pct, machine_type)
 
-    def _build(self, mat, cutter_name, has_ins, db_key, D, z, ae_pct):
+    def _build(self, mat, cutter_name, has_ins, db_key,
+               D, z, ae_pct, machine_type):
         tk.Frame(self, bg=ACCENT, height=4).pack(fill='x')
-        hdr = tk.Frame(self, bg=PANEL, pady=10)
+        hdr = tk.Frame(self, bg=PANEL, pady=8)
         hdr.pack(fill='x')
         tk.Label(hdr, text='РЕЗУЛЬТАТ — Режимы резания',
-                 bg=PANEL, fg=TEXT, font=F_H).pack(side='left', padx=20)
+                bg=PANEL, fg=TEXT, font=F_H).pack(side='left', padx=20)
 
-        out = tk.Text(self, bg=BG, fg=TEXT, font=F_M, relief='flat', bd=12,
-                      wrap='word', state='disabled', spacing1=3, spacing3=3)
-        sb = tk.Scrollbar(self, command=out.yview, bg=PANEL)
+        data = get_data(mat, db_key)
+        mat_name = next(n for k, n, *_ in MATERIALS if k == mat)
+
+        # ── footer (pack first so it's not eaten by expand) ──────────────────
+        foot = tk.Frame(self, bg=PANEL, pady=10)
+        foot.pack(fill='x', side='bottom')
+        styled_btn(foot, '  Закрыть', self.destroy, primary=False).pack(
+            side='right', padx=16)
+        styled_btn(foot, '← Новый расчёт', self.destroy, primary=True).pack(
+            side='left', padx=16)
+
+        if not data:
+            tk.Label(self, text='\n  Данные для выбранной комбинации отсутствуют.',
+                    bg=BG, fg=RED, font=F_B).pack(padx=20, pady=20)
+            return
+
+        vc     = data['vc'];  fz = data['fz'];  ap = data['ap']
+        ae_r   = data['ae'];  ap_abs = data.get('ap_abs', False)
+        coolant = data['coolant'];  notes = data.get('notes', '')
+
+        # ── calculate RPM (cap to machine) ───────────────────────────────────
+        max_rpm   = self._MAX_RPM.get(machine_type, 10000)
+        rpm_lo_raw = vc[0] * 1000 / (math.pi * D)
+        rpm_hi_raw = vc[1] * 1000 / (math.pi * D)
+        rpm_lo = max(1, int(min(rpm_lo_raw, max_rpm)))
+        rpm_hi = max(1, int(min(rpm_hi_raw, max_rpm)))
+        vc_lo_eff = rpm_lo * math.pi * D / 1000
+        vc_hi_eff = rpm_hi * math.pi * D / 1000
+        vf_lo = int(fz[0] * z * rpm_lo)
+        vf_hi = int(fz[1] * z * rpm_hi)
+
+        # ── BIG NUMBERS CARD ─────────────────────────────────────────────────
+        big = tk.Frame(self, bg=CARD, padx=20, pady=14)
+        big.pack(fill='x', padx=12, pady=(8, 4))
+
+        mach_lbl = self._MACH_LBL.get(machine_type, '')
+        tk.Label(big, text=f'Станок: {mach_lbl}',
+                bg=CARD, fg=DIM, font=F_S).pack(anchor='w', pady=(0, 8))
+
+        cols = tk.Frame(big, bg=CARD)
+        cols.pack(fill='x')
+
+        rpm_f = tk.Frame(cols, bg=CARD)
+        rpm_f.pack(side='left', fill='x', expand=True)
+        tk.Label(rpm_f, text='Обороты шпинделя  n',
+                bg=CARD, fg=DIM, font=F_S).pack()
+        tk.Label(rpm_f, text=f'{rpm_lo:,} – {rpm_hi:,}',
+                bg=CARD, fg=TEXT, font=('Segoe UI', 24, 'bold')).pack()
+        tk.Label(rpm_f, text='об/мин',
+                bg=CARD, fg=ACCENT, font=('Segoe UI', 10, 'bold')).pack()
+
+        tk.Frame(cols, bg=BORDER, width=1).pack(side='left', fill='y', padx=20)
+
+        vf_f = tk.Frame(cols, bg=CARD)
+        vf_f.pack(side='left', fill='x', expand=True)
+        tk.Label(vf_f, text='Подача стола  Vf',
+                bg=CARD, fg=DIM, font=F_S).pack()
+        tk.Label(vf_f, text=f'{vf_lo:,} – {vf_hi:,}',
+                bg=CARD, fg=TEXT, font=('Segoe UI', 24, 'bold')).pack()
+        tk.Label(vf_f, text='мм/мин',
+                bg=CARD, fg=ACCENT, font=('Segoe UI', 10, 'bold')).pack()
+
+        if rpm_hi_raw > max_rpm * 1.05:
+            tk.Label(big,
+                    text=f'⚠  Скорость ограничена станком  '
+                         f'(паспортная Vc = {vc[0]:.0f}–{vc[1]:.0f} м/мин, '
+                         f'применяем {vc_lo_eff:.0f}–{vc_hi_eff:.0f} м/мин)',
+                    bg=CARD, fg=YELLOW, font=F_S,
+                    wraplength=640, justify='left').pack(anchor='w', pady=(8, 0))
+
+        # ── SCROLLABLE DETAIL ─────────────────────────────────────────────────
+        sf = tk.Frame(self, bg=BG)
+        sf.pack(fill='both', expand=True, padx=12, pady=4)
+
+        out = tk.Text(sf, bg=BG, fg=TEXT, font=F_M, relief='flat',
+                     bd=0, wrap='word', state='disabled',
+                     spacing1=3, spacing3=3, padx=14, pady=10)
+        sb = tk.Scrollbar(sf, command=out.yview, bg=PANEL,
+                         troughcolor=BG, activebackground=ACCENT,
+                         relief='flat', bd=0, width=12)
         out.config(yscrollcommand=sb.set)
         sb.pack(side='right', fill='y')
         out.pack(fill='both', expand=True)
 
-        out.tag_configure('h1',    foreground=ACCENT,  font=('Segoe UI',12,'bold'))
-        out.tag_configure('val',   foreground=GREEN,   font=F_M)
-        out.tag_configure('warn',  foreground=RED,     font=('Consolas',11,'bold'))
-        out.tag_configure('ok',    foreground=GREEN,   font=('Consolas',11,'bold'))
-        out.tag_configure('note',  foreground=YELLOW,  font=('Consolas',10,'italic'))
-        out.tag_configure('lbl',   foreground=DIM,     font=F_M)
-        out.tag_configure('sep',   foreground=BORDER,  font=F_MS)
-        out.tag_configure('ins',   foreground='#c9a0dc', font=('Consolas',10))
-        out.tag_configure('small', foreground=DIM,     font=F_MS)
-
-        data = get_data(mat, db_key)
-        mat_name = next(n for k,n,*_ in MATERIALS if k==mat)
+        out.tag_configure('h1',   foreground=ACCENT,    font=('Segoe UI', 11, 'bold'))
+        out.tag_configure('val',  foreground=GREEN,     font=F_M)
+        out.tag_configure('warn', foreground=RED,       font=('Consolas', 11, 'bold'))
+        out.tag_configure('ok',   foreground=GREEN,     font=('Consolas', 11, 'bold'))
+        out.tag_configure('note', foreground=YELLOW,    font=('Consolas', 10))
+        out.tag_configure('lbl',  foreground=DIM,       font=F_M)
+        out.tag_configure('sep',  foreground=BORDER,    font=F_MS)
+        out.tag_configure('ins',  foreground='#c9a0dc', font=('Consolas', 10))
+        out.tag_configure('sm',   foreground=DIM,       font=F_MS)
+        out.tag_configure('cy',   foreground=RED,       font=('Segoe UI', 11, 'bold'))
+        out.tag_configure('co',   foreground=YELLOW,    font=('Segoe UI', 11, 'bold'))
+        out.tag_configure('cn',   foreground=GREEN,     font=('Segoe UI', 11, 'bold'))
 
         def w(text, tag='lbl'):
             out.configure(state='normal')
@@ -665,112 +843,88 @@ class ResultWindow(tk.Toplevel):
             out.configure(state='disabled')
 
         def sep():
-            w('  ' + '─'*60 + '\n', 'sep')
+            w('  ' + '─' * 58 + '\n', 'sep')
 
-        if not data:
-            w('\n  Данные для выбранной комбинации отсутствуют.\n', 'warn')
-            self._footer(out)
-            return
-
-        vc = data['vc']; fz = data['fz']; ap = data['ap']
-        ae_r = data['ae']; ap_abs = data.get('ap_abs', False)
-        coolant = data['coolant']; notes = data.get('notes', '')
-
-        w('\n')
-        w('  Материал   :  ', 'lbl');    w(f'{mat_name}\n', 'val')
-        w('  Фреза      :  ', 'lbl');    w(f'{cutter_name}\n', 'val')
-        w(f'  D = {D} мм   z = {z} зубьев\n', 'h1')
-        w('\n')
+        # ── info line ─────────────────────────────────────────────────────────
+        w(f'\n  {mat_name}  /  {cutter_name}\n', 'h1')
+        w(f'  D = {D} мм   z = {z} зубьев\n', 'lbl')
         sep()
 
-        # Vc → n
-        w('\n  Скорость резания       Vc  :  ', 'h1')
-        w(f'{vc[0]} – {vc[1]}  м/мин\n', 'val')
-
-        rpm_lo = int(vc[0]*1000/(math.pi*D))
-        rpm_hi = int(vc[1]*1000/(math.pi*D))
-        w('  Обороты шпинделя       n   :  ', 'h1')
-        w(f'{rpm_lo:,} – {rpm_hi:,}  об/мин\n', 'val')
-
-        # fz → Vf
-        w('\n  Подача на зуб         fz   :  ', 'h1')
+        # Vc + fz
+        w(f'\n  Скорость резания  Vc  :  ', 'h1')
+        w(f'{vc_lo_eff:.0f} – {vc_hi_eff:.0f}  м/мин\n', 'val')
+        w(f'  Подача на зуб    fz   :  ', 'h1')
         w(f'{fz[0]:.3f} – {fz[1]:.3f}  мм/зуб\n', 'val')
-
-        vf_lo = int(fz[0]*z*rpm_lo)
-        vf_hi = int(fz[1]*z*rpm_hi)
-        w('  Подача стола           Vf   :  ', 'h1')
-        w(f'{vf_lo:,} – {vf_hi:,}  мм/мин\n', 'val')
+        sep()
 
         # ap
-        w('\n  Глубина резания        ap   :  ', 'h1')
+        w(f'\n  Глубина резания  ap   :  ', 'h1')
         if ap_abs:
-            w(f'{ap[0]:.2f} – {ap[1]:.2f}  мм  (абсолютное)\n', 'val')
+            w(f'{ap[0]:.2f} – {ap[1]:.2f}  мм  (фиксированная)\n', 'val')
         else:
-            w(f'{ap[0]:.2f}·D – {ap[1]:.2f}·D  =  {ap[0]*D:.2f} – {ap[1]*D:.2f}  мм\n', 'val')
+            w(f'{ap[0]:.2f}×D – {ap[1]:.2f}×D  =  {ap[0]*D:.2f} – {ap[1]*D:.2f}  мм\n',
+              'val')
 
         # ae
-        ae_mm = round(D * ae_pct, 2)
+        ae_mm    = round(D * ae_pct, 2)
         in_range = ae_r[0] <= ae_pct <= ae_r[1]
-        w('  Перекрытие             ae   :  ', 'h1')
-        pct_str = f'{int(ae_pct*100)}%  =  {ae_mm} мм'
+        w(f'  Перекрытие       ae   :  ', 'h1')
+        pct_s = f'{int(ae_pct * 100)}%  =  {ae_mm} мм'
         if in_range:
-            w(f'{pct_str}  ✓\n', 'ok')
+            w(f'{pct_s}  ✓\n', 'ok')
         else:
-            w(f'{pct_str}  ← ВНЕ ДИАПАЗОНА!\n', 'warn')
-            w(f'  {"":42} Норма: {int(ae_r[0]*100)}–{int(ae_r[1]*100)}%\n', 'note')
-
-        # СОЖ
-        w('\n')
+            w(f'{pct_s}  ← ВНЕ ДИАПАЗОНА\n', 'warn')
+            w(f'  Рекомендуется:  {int(ae_r[0]*100)}–{int(ae_r[1]*100)}%\n', 'note')
         sep()
-        w('\n  СОЖ  :  ', 'h1')
-        if coolant == 'yes':
-            w('  ОБЯЗАТЕЛЬНО  (эмульсия / масло, обильно)\n', 'warn')
-        elif coolant == 'opt':
-            w('  Рекомендуется  (или сухая + обдув)\n', 'ok')
-        else:
-            w('  НЕ ПРИМЕНЯТЬ  —  сухая обработка / воздушный обдув\n', 'ok')
 
-        # Примечания
+        # ── СОЖ ──────────────────────────────────────────────────────────────
+        w('\n  СОЖ\n', 'h1')
+        if coolant == 'yes':
+            w('  ● ОБЯЗАТЕЛЕН\n', 'cy')
+            w('  Эмульсия или масло — подавать обильно и непрерывно.\n', 'lbl')
+            w('  Нельзя останавливать подачу СОЖ посреди обработки!\n', 'note')
+        elif coolant == 'opt':
+            w('  ● НА ВАШЕ УСМОТРЕНИЕ\n', 'co')
+            w('  Работает и без СОЖ. Охлаждение улучшит стойкость инструмента.\n', 'lbl')
+            w('  Воздушный обдув — убирает стружку и немного охлаждает.\n', 'note')
+        else:
+            w('  ● НЕ ПРИМЕНЯТЬ\n', 'cn')
+            w('  Только сухая обработка или воздушный обдув для стружки.\n', 'lbl')
+            if 'highfeed' in db_key:
+                w('  High-Feed: СОЖ создаёт термоудар — пластина трескается!\n', 'note')
+            else:
+                w('  Чугун и часть сталей: СОЖ налипает и ухудшает обработку.\n', 'note')
+
         if notes:
             w(f'\n  ⚠  {notes}\n', 'note')
-
-        # Рекомендация инструмента
-        w('\n')
         sep()
-        w('\n  РЕКОМЕНДУЕМЫЙ ИНСТРУМЕНТ\n', 'h1')
 
+        # ── инструмент ───────────────────────────────────────────────────────
+        w('\n  ИНСТРУМЕНТ\n', 'h1')
         solid_rec, idx_rec = INSERT_REC.get(mat, ('', ''))
         if db_key == 'highfeed':
-            w(f'  Тип пластины  :  ', 'lbl')
+            w('  Тип пластины  :  ', 'lbl')
             w(HF_INSERT_REC.get(mat, idx_rec) + '\n', 'ins')
             w('  Форма         :  ', 'lbl')
-            w('XNMU / ONMU / RDHX  —  угол наклона 15–18°, позитивная геометрия\n', 'ins')
-            w('  Принцип       :  ', 'lbl')
-            w('Chip thinning: реальная толщина стружки << fz (программный)\n', 'ins')
-            w('  Формула       :  ', 'lbl')
-            w('hex = fz × sin(KAPR),  KAPR ≈ 15–18°\n', 'ins')
+            w('XNMU / ONMU — угол наклона 15–18°, позитивная геометрия\n', 'ins')
+            w('  Chip thinning :  ', 'lbl')
+            w('При fz=2 мм/зуб реальная стружка всего 0.5 мм → меньше нагрев\n',
+              'ins')
         elif has_ins:
-            w(f'  Пластины      :  ', 'lbl')
+            w('  Пластины  :  ', 'lbl')
             w(idx_rec + '\n', 'ins')
         else:
-            w(f'  Покрытие ТС   :  ', 'lbl')
+            w('  Покрытие  :  ', 'lbl')
             w(solid_rec + '\n', 'ins')
-
-        w('\n')
         sep()
-        w('\n  Черновая:  нижний Vc, верхний fz, максимальный ap\n', 'small')
-        w('  Чистовая:  верхний Vc, нижний fz, меньший ap\n', 'small')
-        w('  * Данные усреднённые — уточняйте по каталогу производителя.\n', 'small')
 
-        self._footer(out)
-
-    def _footer(self, out):
-        foot = tk.Frame(self, bg=PANEL, pady=10)
-        foot.pack(fill='x', side='bottom')
-        styled_btn(foot, '  Закрыть', self.destroy, primary=False).pack(
-            side='right', padx=16)
-        styled_btn(foot, '← Новый расчёт', lambda: [self.destroy()], primary=True).pack(
-            side='left', padx=16)
+        # ── стратегия ────────────────────────────────────────────────────────
+        w('\n  СТРАТЕГИЯ\n', 'h1')
+        w('  Черновая:  нижний Vc,  верхний fz,  макс. ap  — снимаем побольше\n',
+          'sm')
+        w('  Чистовая:  верхний Vc,  нижний fz,  малый  ap  — чистота поверхн.\n',
+          'sm')
+        w('\n  * Данные усреднённые. Уточняйте по каталогу производителя.\n', 'sm')
 
 # ─── ОКНО НАСТРОЕК ───────────────────────────────────────────────────────────
 class SettingsWindow(tk.Toplevel):
@@ -1156,3 +1310,4 @@ class EditRowDialog(tk.Toplevel):
 if __name__ == '__main__':
     app = MainWindow()
     app.mainloop()
+
