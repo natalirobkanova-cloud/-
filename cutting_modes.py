@@ -381,8 +381,9 @@ class MainWindow(tk.Tk):
                     on_back=lambda: self._open_s2(self._last_mat))
 
     def _show_result(self, mat, cutter_key, cutter_name, has_ins, db_key,
-                     D, z, ae_pct, machine_type='highspeed'):
-        ResultWindow(self, mat, cutter_name, has_ins, db_key, D, z, ae_pct, machine_type)
+                     D, z, ae_pct, machine_type='highspeed', op_type='both'):
+        ResultWindow(self, mat, cutter_name, has_ins, db_key, D, z, ae_pct,
+                     machine_type, op_type)
 
     def _settings(self):
         SettingsWindow(self)
@@ -539,18 +540,24 @@ class Step2Dialog(BaseDialog):
 class Step3Dialog(BaseDialog):
     def __init__(self, parent, mat, cutter_key, cutter_name, has_ins, db_key,
                  on_next, on_back=None):
-        super().__init__(parent, 'Параметры инструмента', 3, 3, 540, 640)
-        self.minsize(520, 580)
+        super().__init__(parent, 'Параметры инструмента', 3, 3, 560, 780)
+        self.minsize(530, 680)
         self._args = (mat, cutter_key, cutter_name, has_ins, db_key)
         self._on_next = on_next
         self._on_back = on_back
         self._mach = tk.StringVar(value='highspeed')
         self._mach_cards = {}
+        self._op  = tk.StringVar(value='both')
+        self._op_cards = {}
+        self._ae_manual = tk.BooleanVar(value=True)
+        self._ae_frame = None
+        self._ap_lbl = None
         self._build()
 
     def _build(self):
         mat, cutter_key, cutter_name, has_ins, db_key = self._args
         mat_name = next(n for k, n, *_ in MATERIALS if k == mat)
+        has_finish = db_key not in ('highfeed',)
 
         tk.Label(self.body, text=f'{mat_name}   /   {cutter_name}',
                  bg=BG, fg=DIM, font=F_S).pack(anchor='w', pady=(0, 10))
@@ -574,12 +581,21 @@ class Step3Dialog(BaseDialog):
         row('Диаметр фрезы  D (мм)', self._D, '12', 'мм')
         row('Число зубьев  z',       self._z, '4',  'шт')
 
-        # ae slider
-        tk.Label(self.body, text='Радиальное перекрытие  ae',
-                bg=BG, fg=TEXT, font=F_B).pack(anchor='w', pady=(12, 4))
+        # ae manual checkbox
+        cb_f = tk.Frame(self.body, bg=BG)
+        cb_f.pack(fill='x', pady=(10, 2))
+        tk.Checkbutton(cb_f, text='Задать радиальное перекрытие ae вручную',
+                       variable=self._ae_manual, bg=BG, fg=TEXT,
+                       selectcolor=CARD, activebackground=BG,
+                       activeforeground=TEXT, font=F_B,
+                       command=self._toggle_ae_manual).pack(side='left')
+
+        # ae slider frame (shown/hidden by checkbox)
+        self._ae_frame = tk.Frame(self.body, bg=BG)
+        self._ae_frame.pack(fill='x')
 
         self._ae = tk.IntVar(value=50)
-        sl_f = tk.Frame(self.body, bg=CARD, padx=12, pady=8)
+        sl_f = tk.Frame(self._ae_frame, bg=CARD, padx=12, pady=8)
         sl_f.pack(fill='x')
         sl = tk.Scale(sl_f, from_=5, to=100, orient='horizontal',
                      variable=self._ae, bg=CARD, fg=TEXT,
@@ -592,12 +608,48 @@ class Step3Dialog(BaseDialog):
         self._ae_lbl.pack()
 
         # ae canvas preview
-        self._ae_canvas = tk.Canvas(self.body, bg=BG, height=120,
+        self._ae_canvas = tk.Canvas(self._ae_frame, bg=BG, height=120,
                                    bd=0, highlightthickness=0)
         self._ae_canvas.pack(fill='x', pady=(6, 0))
         self._ae_canvas.bind('<Configure>',
                             lambda e: self._draw_ae(self._ae.get() / 100.0))
         self._draw_ae(0.5)
+
+        # ap info label (always visible)
+        self._ap_lbl = tk.Label(self.body, text='',
+                               bg=BG, fg=DIM, font=F_S)
+        self._ap_lbl.pack(anchor='w', pady=(4, 0))
+        self._upd_ap_lbl()
+
+        # op type
+        tk.Label(self.body, text='Тип обработки', bg=BG, fg=TEXT,
+                font=F_B).pack(anchor='w', pady=(14, 6))
+        op_f = tk.Frame(self.body, bg=BG)
+        op_f.pack(fill='x')
+        for key, title, sub in [
+            ('rough',  'Черновая',  'макс. съём, большой ap'),
+            ('finish', 'Чистовая',  'высокий Vc, малый fz'),
+            ('both',   'Показать обе', 'рекомендуется'),
+        ]:
+            disabled = (key == 'finish' and not has_finish)
+            bg_c = BG if disabled else CARD
+            fg_c = BORDER if disabled else TEXT
+            cur = '' if disabled else 'hand2'
+            f = tk.Frame(op_f, bg=bg_c, cursor=cur, padx=12, pady=8)
+            f.pack(side='left', fill='x', expand=True, padx=(0, 6))
+            l1 = tk.Label(f, text=title, bg=bg_c, fg=fg_c, font=F_B)
+            l1.pack(anchor='w')
+            l2 = tk.Label(f, text=sub, bg=bg_c,
+                         fg=BORDER if disabled else DIM, font=F_S)
+            l2.pack(anchor='w')
+            self._op_cards[key] = (f, l1, l2, disabled)
+            if not disabled:
+                for w in (f, l1, l2):
+                    w.bind('<Button-1>', lambda e, k=key: self._sel_op(k))
+        if not has_finish:
+            self._sel_op('rough')
+        else:
+            self._sel_op('both')
 
         # machine type
         tk.Label(self.body, text='Тип станка', bg=BG, fg=TEXT,
@@ -631,6 +683,45 @@ class Step3Dialog(BaseDialog):
             for w in (f, l1, l2):
                 w.config(bg=bg)
 
+    def _sel_op(self, key):
+        self._op.set(key)
+        for k, (f, l1, l2, disabled) in self._op_cards.items():
+            if disabled:
+                continue
+            bg = CARD_S if k == key else CARD
+            for w in (f, l1, l2):
+                w.config(bg=bg)
+
+    def _toggle_ae_manual(self):
+        if self._ae_manual.get():
+            self._ae_frame.pack(fill='x')
+        else:
+            self._ae_frame.pack_forget()
+        self._upd_ap_lbl()
+
+    def _upd_ap_lbl(self):
+        if not self._ap_lbl:
+            return
+        mat, cutter_key, cutter_name, has_ins, db_key = self._args
+        data = get_data(mat, db_key)
+        if not data:
+            return
+        try:
+            D = float(self._D.get())
+        except Exception:
+            D = 12.0
+        ap = data['ap']
+        ap_abs = data.get('ap_abs', False)
+        if ap_abs:
+            txt = f'Глубина резания  ap :  {ap[0]:.2f} – {ap[1]:.2f} мм'
+        else:
+            txt = (f'Глубина резания  ap :  '
+                   f'{ap[0]*D:.2f} – {ap[1]*D:.2f} мм  '
+                   f'({ap[0]:.2f}×D – {ap[1]:.2f}×D)')
+        if not self._ae_manual.get():
+            txt += '   ·   таблица вариантов ae→ap в результатах'
+        self._ap_lbl.config(text=txt)
+
     def _back(self):
         self.destroy()
         if self._on_back:
@@ -645,6 +736,7 @@ class Step3Dialog(BaseDialog):
         except Exception:
             self._ae_lbl.config(text=f'ae = {self._ae.get()}%')
         self._draw_ae(self._ae.get() / 100.0)
+        self._upd_ap_lbl()
 
     def _draw_ae(self, ae_pct):
         c = self._ae_canvas
@@ -711,9 +803,10 @@ class Step3Dialog(BaseDialog):
             messagebox.showerror('Ошибка', 'Введите корректное число зубьев z', parent=self)
             return
         mat, cutter_key, cutter_name, has_ins, db_key = self._args
+        ae_pct = self._ae.get() / 100.0 if self._ae_manual.get() else None
         self.destroy()
         self._on_next(mat, cutter_key, cutter_name, has_ins, db_key,
-                      D, z, self._ae.get() / 100.0, self._mach.get())
+                      D, z, ae_pct, self._mach.get(), self._op.get())
 
 # ─── РЕЗУЛЬТАТ ────────────────────────────────────────────────────────────────
 class ResultWindow(tk.Toplevel):
@@ -722,18 +815,19 @@ class ResultWindow(tk.Toplevel):
                  'highspeed': 'АКИРА / VISION  (до 10 000 об/мин)'}
 
     def __init__(self, parent, mat, cutter_name, has_ins, db_key,
-                 D, z, ae_pct, machine_type='highspeed'):
+                 D, z, ae_pct, machine_type='highspeed', op_type='both'):
         super().__init__(parent)
         self.title('Результат — Режимы резания')
         self.configure(bg=BG)
         self.resizable(True, True)
         self.grab_set()
-        center(self, 720, 700)
+        center(self, 760, 760)
         self.transient(parent)
-        self._build(mat, cutter_name, has_ins, db_key, D, z, ae_pct, machine_type)
+        self._build(mat, cutter_name, has_ins, db_key, D, z, ae_pct,
+                    machine_type, op_type)
 
     def _build(self, mat, cutter_name, has_ins, db_key,
-               D, z, ae_pct, machine_type):
+               D, z, ae_pct, machine_type, op_type):
         tk.Frame(self, bg=ACCENT, height=4).pack(fill='x')
         hdr = tk.Frame(self, bg=PANEL, pady=8)
         hdr.pack(fill='x')
@@ -743,7 +837,7 @@ class ResultWindow(tk.Toplevel):
         data = get_data(mat, db_key)
         mat_name = next(n for k, n, *_ in MATERIALS if k == mat)
 
-        # ── footer (pack first so it's not eaten by expand) ──────────────────
+        # ── footer (pack first) ───────────────────────────────────────────────
         foot = tk.Frame(self, bg=PANEL, pady=10)
         foot.pack(fill='x', side='bottom')
         styled_btn(foot, '  Закрыть', self.destroy, primary=False).pack(
@@ -756,59 +850,84 @@ class ResultWindow(tk.Toplevel):
                     bg=BG, fg=RED, font=F_B).pack(padx=20, pady=20)
             return
 
-        vc     = data['vc'];  fz = data['fz'];  ap = data['ap']
-        ae_r   = data['ae'];  ap_abs = data.get('ap_abs', False)
+        vc      = data['vc'];  fz = data['fz'];  ap = data['ap']
+        ae_r    = data['ae'];  ap_abs = data.get('ap_abs', False)
         coolant = data['coolant'];  notes = data.get('notes', '')
 
-        # ── calculate RPM (cap to machine) ───────────────────────────────────
-        max_rpm   = self._MAX_RPM.get(machine_type, 10000)
-        rpm_lo_raw = vc[0] * 1000 / (math.pi * D)
+        max_rpm = self._MAX_RPM.get(machine_type, 10000)
+        has_finish = db_key not in ('highfeed',)
+
+        # ── split into rough / finish ranges ─────────────────────────────────
+        # Roughing: lower Vc, higher fz (upper half of fz range)
+        vc_r = (vc[0], vc[0] + (vc[1] - vc[0]) * 0.55)
+        fz_r = (fz[0] + (fz[1] - fz[0]) * 0.45, fz[1])
+        # Finishing: higher Vc, lower fz (lower half of fz range)
+        vc_f = (vc[0] + (vc[1] - vc[0]) * 0.50, vc[1])
+        fz_f = (fz[0], fz[0] + (fz[1] - fz[0]) * 0.40)
+
+        def cap(vc_range, fz_range):
+            lo = max(1, int(min(vc_range[0] * 1000 / (math.pi * D), max_rpm)))
+            hi = max(1, int(min(vc_range[1] * 1000 / (math.pi * D), max_rpm)))
+            return lo, hi, int(fz_range[0] * z * lo), int(fz_range[1] * z * hi)
+
+        rn_lo, rn_hi, rf_lo, rf_hi = cap(vc_r, fz_r)
+        fn_lo, fn_hi, ff_lo, ff_hi = cap(vc_f, fz_f)
+
+        # for warnings
         rpm_hi_raw = vc[1] * 1000 / (math.pi * D)
-        rpm_lo = max(1, int(min(rpm_lo_raw, max_rpm)))
-        rpm_hi = max(1, int(min(rpm_hi_raw, max_rpm)))
-        vc_lo_eff = rpm_lo * math.pi * D / 1000
-        vc_hi_eff = rpm_hi * math.pi * D / 1000
-        vf_lo = int(fz[0] * z * rpm_lo)
-        vf_hi = int(fz[1] * z * rpm_hi)
+        mach_lbl   = self._MACH_LBL.get(machine_type, '')
+
+        show_rough  = (op_type in ('rough', 'both')) or not has_finish
+        show_finish = (op_type in ('finish', 'both')) and has_finish
 
         # ── BIG NUMBERS CARD ─────────────────────────────────────────────────
         big = tk.Frame(self, bg=CARD, padx=20, pady=14)
         big.pack(fill='x', padx=12, pady=(8, 4))
 
-        mach_lbl = self._MACH_LBL.get(machine_type, '')
         tk.Label(big, text=f'Станок: {mach_lbl}',
                 bg=CARD, fg=DIM, font=F_S).pack(anchor='w', pady=(0, 8))
+
+        def mode_col(parent, label, color, n_lo, n_hi, f_lo, f_hi):
+            tk.Label(parent, text=label, bg=CARD, fg=color,
+                    font=('Segoe UI', 9, 'bold')).pack(anchor='w', pady=(0, 4))
+            sub = tk.Frame(parent, bg=CARD)
+            sub.pack(fill='x')
+            nf = tk.Frame(sub, bg=CARD)
+            nf.pack(side='left', fill='x', expand=True)
+            tk.Label(nf, text='n  (об/мин)', bg=CARD, fg=DIM, font=F_S).pack()
+            tk.Label(nf, text=f'{n_lo:,} – {n_hi:,}',
+                    bg=CARD, fg=TEXT, font=('Segoe UI', 21, 'bold')).pack()
+            tk.Frame(sub, bg=BORDER, width=1).pack(side='left', fill='y', padx=12)
+            vff = tk.Frame(sub, bg=CARD)
+            vff.pack(side='left', fill='x', expand=True)
+            tk.Label(vff, text='Vf  (мм/мин)', bg=CARD, fg=DIM, font=F_S).pack()
+            tk.Label(vff, text=f'{f_lo:,} – {f_hi:,}',
+                    bg=CARD, fg=TEXT, font=('Segoe UI', 21, 'bold')).pack()
 
         cols = tk.Frame(big, bg=CARD)
         cols.pack(fill='x')
 
-        rpm_f = tk.Frame(cols, bg=CARD)
-        rpm_f.pack(side='left', fill='x', expand=True)
-        tk.Label(rpm_f, text='Обороты шпинделя  n',
-                bg=CARD, fg=DIM, font=F_S).pack()
-        tk.Label(rpm_f, text=f'{rpm_lo:,} – {rpm_hi:,}',
-                bg=CARD, fg=TEXT, font=('Segoe UI', 24, 'bold')).pack()
-        tk.Label(rpm_f, text='об/мин',
-                bg=CARD, fg=ACCENT, font=('Segoe UI', 10, 'bold')).pack()
-
-        tk.Frame(cols, bg=BORDER, width=1).pack(side='left', fill='y', padx=20)
-
-        vf_f = tk.Frame(cols, bg=CARD)
-        vf_f.pack(side='left', fill='x', expand=True)
-        tk.Label(vf_f, text='Подача стола  Vf',
-                bg=CARD, fg=DIM, font=F_S).pack()
-        tk.Label(vf_f, text=f'{vf_lo:,} – {vf_hi:,}',
-                bg=CARD, fg=TEXT, font=('Segoe UI', 24, 'bold')).pack()
-        tk.Label(vf_f, text='мм/мин',
-                bg=CARD, fg=ACCENT, font=('Segoe UI', 10, 'bold')).pack()
+        if show_rough and show_finish:
+            lc = tk.Frame(cols, bg=CARD)
+            lc.pack(side='left', fill='x', expand=True)
+            mode_col(lc, '▶  ЧЕРНОВАЯ', YELLOW, rn_lo, rn_hi, rf_lo, rf_hi)
+            tk.Frame(cols, bg=BORDER, width=1).pack(side='left', fill='y', padx=14)
+            rc = tk.Frame(cols, bg=CARD)
+            rc.pack(side='left', fill='x', expand=True)
+            mode_col(rc, '▶  ЧИСТОВАЯ', GREEN, fn_lo, fn_hi, ff_lo, ff_hi)
+        elif show_finish:
+            mode_col(cols, '▶  ЧИСТОВАЯ', GREEN, fn_lo, fn_hi, ff_lo, ff_hi)
+        else:
+            mode_col(cols, '▶  ЧЕРНОВАЯ', YELLOW, rn_lo, rn_hi, rf_lo, rf_hi)
 
         if rpm_hi_raw > max_rpm * 1.05:
+            vc_eff_hi = min(vc[1], max_rpm * math.pi * D / 1000)
             tk.Label(big,
                     text=f'⚠  Скорость ограничена станком  '
                          f'(паспортная Vc = {vc[0]:.0f}–{vc[1]:.0f} м/мин, '
-                         f'применяем {vc_lo_eff:.0f}–{vc_hi_eff:.0f} м/мин)',
+                         f'применяем до {vc_eff_hi:.0f} м/мин)',
                     bg=CARD, fg=YELLOW, font=F_S,
-                    wraplength=640, justify='left').pack(anchor='w', pady=(8, 0))
+                    wraplength=700, justify='left').pack(anchor='w', pady=(8, 0))
 
         # ── SCROLLABLE DETAIL ─────────────────────────────────────────────────
         sf = tk.Frame(self, bg=BG)
@@ -825,6 +944,8 @@ class ResultWindow(tk.Toplevel):
         out.pack(fill='both', expand=True)
 
         out.tag_configure('h1',   foreground=ACCENT,    font=('Segoe UI', 11, 'bold'))
+        out.tag_configure('h2',   foreground=YELLOW,    font=('Segoe UI', 10, 'bold'))
+        out.tag_configure('h2g',  foreground=GREEN,     font=('Segoe UI', 10, 'bold'))
         out.tag_configure('val',  foreground=GREEN,     font=F_M)
         out.tag_configure('warn', foreground=RED,       font=('Consolas', 11, 'bold'))
         out.tag_configure('ok',   foreground=GREEN,     font=('Consolas', 11, 'bold'))
@@ -836,6 +957,8 @@ class ResultWindow(tk.Toplevel):
         out.tag_configure('cy',   foreground=RED,       font=('Segoe UI', 11, 'bold'))
         out.tag_configure('co',   foreground=YELLOW,    font=('Segoe UI', 11, 'bold'))
         out.tag_configure('cn',   foreground=GREEN,     font=('Segoe UI', 11, 'bold'))
+        out.tag_configure('tbl',  foreground=TEXT,      font=('Consolas', 10))
+        out.tag_configure('tblh', foreground=ACCENT,    font=('Consolas', 10, 'bold'))
 
         def w(text, tag='lbl'):
             out.configure(state='normal')
@@ -850,56 +973,55 @@ class ResultWindow(tk.Toplevel):
         w(f'  D = {D} мм   z = {z} зубьев\n', 'lbl')
         sep()
 
-        # Vc + fz
-        w(f'\n  Скорость резания  Vc  :  ', 'h1')
-        w(f'{vc_lo_eff:.0f} – {vc_hi_eff:.0f}  м/мин\n', 'val')
-        w(f'  Подача на зуб    fz   :  ', 'h1')
-        w(f'{fz[0]:.3f} – {fz[1]:.3f}  мм/зуб\n', 'val')
-        sep()
+        # ── ГЛУБИНА И ПЕРЕКРЫТИЕ ──────────────────────────────────────────────
+        w('\n  ГЛУБИНА И ПЕРЕКРЫТИЕ\n', 'h1')
 
-        # ap
-        w(f'\n  Глубина резания  ap   :  ', 'h1')
-        if ap_abs:
-            w(f'{ap[0]:.2f} – {ap[1]:.2f}  мм  (фиксированная)\n', 'val')
-        else:
-            w(f'{ap[0]:.2f}×D – {ap[1]:.2f}×D  =  {ap[0]*D:.2f} – {ap[1]*D:.2f}  мм\n',
-              'val')
+        ap_lo_mm = ap[0] if ap_abs else ap[0] * D
+        ap_hi_mm = ap[1] if ap_abs else ap[1] * D
 
-        # ae
-        ae_mm    = round(D * ae_pct, 2)
-        in_range = ae_r[0] <= ae_pct <= ae_r[1]
-        w(f'  Перекрытие       ae   :  ', 'h1')
-        pct_s = f'{int(ae_pct * 100)}%  =  {ae_mm} мм'
-        if in_range:
-            w(f'{pct_s}  ✓\n', 'ok')
-        else:
-            w(f'{pct_s}  ← ВНЕ ДИАПАЗОНА\n', 'warn')
-            w(f'  Рекомендуется:  {int(ae_r[0]*100)}–{int(ae_r[1]*100)}%\n', 'note')
-        sep()
-
-        # ── СОЖ ──────────────────────────────────────────────────────────────
-        w('\n  СОЖ\n', 'h1')
-        if coolant == 'yes':
-            w('  ● ОБЯЗАТЕЛЕН\n', 'cy')
-            w('  Эмульсия или масло — подавать обильно и непрерывно.\n', 'lbl')
-            w('  Нельзя останавливать подачу СОЖ посреди обработки!\n', 'note')
-        elif coolant == 'opt':
-            w('  ● НА ВАШЕ УСМОТРЕНИЕ\n', 'co')
-            w('  Работает и без СОЖ. Охлаждение улучшит стойкость инструмента.\n', 'lbl')
-            w('  Воздушный обдув — убирает стружку и немного охлаждает.\n', 'note')
-        else:
-            w('  ● НЕ ПРИМЕНЯТЬ\n', 'cn')
-            w('  Только сухая обработка или воздушный обдув для стружки.\n', 'lbl')
-            if 'highfeed' in db_key:
-                w('  High-Feed: СОЖ создаёт термоудар — пластина трескается!\n', 'note')
+        if ae_pct is not None:
+            # manual ae — show specific values
+            w(f'  Глубина резания  ap  :  ', 'lbl')
+            if ap_abs:
+                w(f'{ap_lo_mm:.2f} – {ap_hi_mm:.2f}  мм\n', 'val')
             else:
-                w('  Чугун и часть сталей: СОЖ налипает и ухудшает обработку.\n', 'note')
+                w(f'{ap_lo_mm:.2f} – {ap_hi_mm:.2f}  мм  '
+                  f'({ap[0]:.2f}×D – {ap[1]:.2f}×D)\n', 'val')
+            ae_mm    = round(D * ae_pct, 2)
+            in_range = ae_r[0] <= ae_pct <= ae_r[1]
+            w(f'  Перекрытие       ae  :  ', 'lbl')
+            pct_s = f'{int(ae_pct * 100)}%  =  {ae_mm} мм'
+            if in_range:
+                w(f'{pct_s}  ✓\n', 'ok')
+            else:
+                w(f'{pct_s}  ← ВНЕ ДИАПАЗОНА\n', 'warn')
+                w(f'  Рекомендуется:  {int(ae_r[0]*100)}–{int(ae_r[1]*100)}%\n',
+                  'note')
+        else:
+            # no manual ae — show 5-row table
+            w(f'  Рекомендуемый диапазон ae: '
+              f'{int(ae_r[0]*100)}–{int(ae_r[1]*100)}%\n', 'lbl')
+            w('\n', 'lbl')
+            w(f'  {"ae %":>6}   {"Глубина ap (мм)":22}  {"Примечание"}\n', 'tblh')
+            w('  ' + '─' * 54 + '\n', 'sep')
+            ap_factors = [(20, 1.8), (40, 1.4), (60, 1.0), (80, 0.75), (100, 0.55)]
+            for ae_int, factor in ap_factors:
+                hi = round(min(ap_hi_mm * factor, ap_hi_mm * 2.2), 2)
+                hi = max(hi, ap_lo_mm)
+                if ae_int == 60:
+                    note = '← стандарт'
+                elif ae_int == 100:
+                    note = '(слот, max нагрузка)'
+                elif ae_int == 20:
+                    note = '(троxоидальная HSM)'
+                else:
+                    note = ''
+                w(f'  {ae_int:>5}%   {ap_lo_mm:.2f} – {hi:.2f}', 'tbl')
+                w(f'  {note}\n', 'note' if note else 'tbl')
 
-        if notes:
-            w(f'\n  ⚠  {notes}\n', 'note')
         sep()
 
-        # ── инструмент ───────────────────────────────────────────────────────
+        # ── ИНСТРУМЕНТ / ПЛАСТИНЫ ─────────────────────────────────────────────
         w('\n  ИНСТРУМЕНТ\n', 'h1')
         solid_rec, idx_rec = INSERT_REC.get(mat, ('', ''))
         if db_key == 'highfeed':
@@ -918,11 +1040,71 @@ class ResultWindow(tk.Toplevel):
             w(solid_rec + '\n', 'ins')
         sep()
 
-        # ── стратегия ────────────────────────────────────────────────────────
-        w('\n  СТРАТЕГИЯ\n', 'h1')
-        w('  Черновая:  нижний Vc,  верхний fz,  макс. ap  — снимаем побольше\n',
-          'sm')
-        w('  Чистовая:  верхний Vc,  нижний fz,  малый  ap  — чистота поверхн.\n',
+        # ── Vc + fz подробности ───────────────────────────────────────────────
+        w('\n  СКОРОСТЬ И ПОДАЧА НА ЗУБ\n', 'h1')
+        if show_rough and show_finish:
+            w('  ЧЕРНОВАЯ\n', 'h2')
+            vc_r_lo_eff = rn_lo * math.pi * D / 1000
+            vc_r_hi_eff = rn_hi * math.pi * D / 1000
+            w(f'  Vc : {vc_r_lo_eff:.0f} – {vc_r_hi_eff:.0f} м/мин   '
+              f'fz : {fz_r[0]:.3f} – {fz_r[1]:.3f} мм/зуб\n', 'val')
+            w('  ЧИСТОВАЯ\n', 'h2g')
+            vc_f_lo_eff = fn_lo * math.pi * D / 1000
+            vc_f_hi_eff = fn_hi * math.pi * D / 1000
+            w(f'  Vc : {vc_f_lo_eff:.0f} – {vc_f_hi_eff:.0f} м/мин   '
+              f'fz : {fz_f[0]:.3f} – {fz_f[1]:.3f} мм/зуб\n', 'val')
+        elif show_finish:
+            vc_f_lo_eff = fn_lo * math.pi * D / 1000
+            vc_f_hi_eff = fn_hi * math.pi * D / 1000
+            w(f'  Vc : {vc_f_lo_eff:.0f} – {vc_f_hi_eff:.0f} м/мин   '
+              f'fz : {fz_f[0]:.3f} – {fz_f[1]:.3f} мм/зуб\n', 'val')
+        else:
+            vc_r_lo_eff = rn_lo * math.pi * D / 1000
+            vc_r_hi_eff = rn_hi * math.pi * D / 1000
+            w(f'  Vc : {vc_r_lo_eff:.0f} – {vc_r_hi_eff:.0f} м/мин   '
+              f'fz : {fz_r[0]:.3f} – {fz_r[1]:.3f} мм/зуб\n', 'val')
+        sep()
+
+        # ── СОЖ ──────────────────────────────────────────────────────────────
+        w('\n  СОЖ\n', 'h1')
+        if coolant == 'yes':
+            w('  ● ОБЯЗАТЕЛЕН\n', 'cy')
+            w('  Эмульсия или масло — подавать обильно и непрерывно.\n', 'lbl')
+            w('  Нельзя останавливать подачу СОЖ посреди обработки!\n', 'note')
+        elif coolant == 'opt':
+            w('  ● НА ВАШЕ УСМОТРЕНИЕ\n', 'co')
+            w('  Работает и без СОЖ. Охлаждение улучшит стойкость инструмента.\n',
+              'lbl')
+            w('  Воздушный обдув убирает стружку и немного охлаждает.\n', 'note')
+        else:
+            w('  ● НЕ ПРИМЕНЯТЬ\n', 'cn')
+            w('  Только сухая обработка или воздушный обдув для стружки.\n', 'lbl')
+            if 'highfeed' in db_key:
+                w('  High-Feed: СОЖ вызывает термоудар — пластина трескается!\n',
+                  'note')
+            else:
+                w('  Чугун и часть сталей: СОЖ налипает и ухудшает обработку.\n',
+                  'note')
+
+        if notes:
+            w(f'\n  ⚠  {notes}\n', 'note')
+        sep()
+
+        # ── СТРАТЕГИЯ ────────────────────────────────────────────────────────
+        w('\n  СТРАТЕГИЯ И СОВЕТЫ ПО ПРОВОДКЕ\n', 'h1')
+        if has_finish:
+            w('  Черновая  — нижний Vc, верхний fz, максимальный ap.\n'
+              '             Цель: снять как можно больше металла.\n', 'sm')
+            w('  Чистовая  — верхний Vc, нижний fz, малый ap (0.1–0.5 мм).\n'
+              '             Цель: чистота поверхности Ra 1.6–3.2.\n', 'sm')
+        else:
+            w('  High-Feed  — только черновая стратегия.\n'
+              '              Большой fz при малом ae и малом ae → высокая подача.\n',
+              'sm')
+        w('\n  Общее:\n', 'sm')
+        w('  · Начинайте с нижней границы диапазона, повышайте при стабильной работе.\n'
+          '  · При вибрации: снизьте fz или уменьшите ae, не скорость.\n'
+          '  · Не останавливайте подачу при врезании — инструмент перегреется.\n',
           'sm')
         w('\n  * Данные усреднённые. Уточняйте по каталогу производителя.\n', 'sm')
 
